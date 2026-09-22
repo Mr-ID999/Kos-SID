@@ -1,0 +1,1998 @@
+<html style="margin:0;padding:0;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Special-ID NEXUS v3.0 — Sistem Manajemen Kos Quantum Lengkap</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- KONTAINER PARTIKEL -->
+<div id="partikelCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;"></div>
+<div class="hologram-grid" style="position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0.06;"></div>
+
+<!-- HALAMAN LOGIN -->
+<div id="halamanLogin" style="position:relative;z-index:10;min-height:800px;display:flex;align-items:center;justify-content:center;padding:40px 20px;overflow:hidden;">
+    <div class="energy-ring" style="position:absolute;width:600px;height:600px;border-radius:50%;border:2px solid transparent;border-top-color:#00f0ff;border-right-color:#bf00ff;animation:rotateRing 8s linear infinite;opacity:0.3;"></div>
+    <div class="energy-ring" style="position:absolute;width:500px;height:500px;border-radius:50%;border:2px solid transparent;border-bottom-color:#00ff88;border-left-color:#ff00aa;animation:rotateRing 6s linear infinite reverse;opacity:0.25;"></div>
+    
+    <div style="position:relative;width:100%;max-width:900px;display:grid;grid-template-columns:1fr 1fr;border-radius:24px;overflow:hidden;box-shadow:0 0 80px rgba(0,240,255,0.3),0 0 120px rgba(191,0,255,0.2);">
+        
+        <!-- SISI KIRI: HOLOGRAM AI -->
+        <div style="background:linear-gradient(135deg,rgba(10,10,30,0.95),rgba(20,0,40,0.95));padding:50px 40px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid rgba(0,240,255,0.3);">
+            <div style="text-align:center;margin-bottom:30px;">
+                <h1 style="font-family:'Orbitron',sans-serif;font-size:32px;font-weight:900;letter-spacing:4px;background:linear-gradient(90deg,#00f0ff,#bf00ff,#00ff88);-webkit-background-clip:text;background-clip:text;color:transparent;margin:0;">SPECIAL-ID</h1>
+                <p style="font-family:'Rajdhani',sans-serif;color:#00f0ff;font-size:14px;letter-spacing:8px;margin-top:5px;text-transform:uppercase;">NEXUS v3.0</p>
+                <div style="width:100px;height:2px;background:linear-gradient(90deg,transparent,#00f0ff,transparent);margin:15px auto;"></div>
+            </div>
+            
+            <!-- HOLOGRAM AI -->
+            <div style="position:relative;width:220px;height:220px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                <div style="position:absolute;width:100%;height:100%;border-radius:50%;border:2px solid rgba(0,240,255,0.4);animation:holoPulse 3s ease-in-out infinite;"></div>
+                <div style="position:absolute;width:80%;height:80%;border-radius:50%;border:1px dashed rgba(191,0,255,0.5);animation:holoRotate 10s linear infinite;"></div>
+                <div style="position:absolute;width:60%;height:60%;border-radius:50%;border:2px solid rgba(0,255,136,0.4);animation:holoPulse 2s ease-in-out infinite reverse;"></div>
+                <div style="width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,#00f0ff 0%,#bf00ff 50%,transparent 70%);display:flex;align-items:center;justify-content:center;animation:coreFloat 4s ease-in-out infinite;">
+                    <div style="width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,#ffffff 0%,#00f0ff 40%,transparent 70%);display:flex;align-items:center;justify-content:center;">
+                        <i class="fas fa-brain" style="font-size:28px;color:#0a0a1e;text-shadow:0 0 10px #00f0ff;"></i>
+                    </div>
+                </div>
+                <div style="position:absolute;width:6px;height:6px;background:#00f0ff;border-radius:50%;box-shadow:0 0 10px #00f0ff;animation:particleOrbit 5s linear infinite;"></div>
+                <div style="position:absolute;width:4px;height:4px;background:#bf00ff;border-radius:50%;box-shadow:0 0 10px #bf00ff;animation:particleOrbit 7s linear infinite reverse;"></div>
+            </div>
+            
+            <div style="text-align:center;">
+                <h3 style="font-family:'Orbitron',sans-serif;color:#00f0ff;font-size:18px;letter-spacing:3px;margin:0;">NEXUS AI</h3>
+                <p id="aiStatusLogin" style="font-family:'Share Tech Mono',monospace;color:rgba(0,240,255,0.6);font-size:11px;margin-top:5px;">[ ONLINE ] — Sistem Siap</p>
+            </div>
+            
+            <div style="margin-top:25px;padding:15px 20px;background:rgba(0,240,255,0.08);border:1px solid rgba(0,240,255,0.3);border-radius:12px;max-width:100%;">
+                <p id="aiWelcomeText" style="font-family:'Rajdhani',sans-serif;color:#e0e0ff;font-size:13px;line-height:1.5;margin:0;">
+                    <span style="color:#00f0ff;">›</span> Selamat datang di sistem generasi mendatang. Saya NEXUS AI, asisten cerdas dengan kemampuan suara.
+                </p>
+            </div>
+            
+            <div style="display:flex;gap:20px;margin-top:25px;font-family:'Share Tech Mono',monospace;font-size:10px;">
+                <div style="text-align:center;"><div style="color:#00ff88;">●</div><div style="color:rgba(255,255,255,0.5);">VOICE</div></div>
+                <div style="text-align:center;"><div style="color:#00f0ff;">●</div><div style="color:rgba(255,255,255,0.5);">QUANTUM</div></div>
+                <div style="text-align:center;"><div style="color:#bf00ff;">●</div><div style="color:rgba(255,255,255,0.5);">NEURAL</div></div>
+            </div>
+        </div>
+        
+        <!-- SISI KANAN: FORM LOGIN -->
+        <div style="background:linear-gradient(135deg,rgba(15,15,35,0.98),rgba(25,10,50,0.98));padding:50px 45px;display:flex;flex-direction:column;justify-content:center;position:relative;">
+            <div style="position:absolute;top:20px;right:20px;width:40px;height:40px;border-top:2px solid #00f0ff;border-right:2px solid #00f0ff;opacity:0.6;"></div>
+            <div style="position:absolute;bottom:20px;left:20px;width:40px;height:40px;border-bottom:2px solid #bf00ff;border-left:2px solid #bf00ff;opacity:0.6;"></div>
+            
+            <h2 style="font-family:'Orbitron',sans-serif;color:#ffffff;font-size:24px;font-weight:700;margin:0 0 5px 0;">AKSES SISTEM</h2>
+            <p style="font-family:'Rajdhani',sans-serif;color:rgba(255,255,255,0.5);font-size:13px;margin:0 0 30px 0;">Verifikasi identitas untuk masuk ke jaringan NEXUS</p>
+            
+            <div id="notifJatuhTempoLogin" class="hidden" style="background:rgba(255,150,0,0.1);border:1px solid rgba(255,150,0,0.4);border-left:3px solid #ff9600;color:#ffcc80;padding:12px 15px;border-radius:8px;margin-bottom:15px;font-family:'Rajdhani',sans-serif;font-size:13px;">
+                <i class="fas fa-exclamation-triangle mr-2"></i><span id="teksNotifLogin"></span>
+            </div>
+            <div id="loginError" class="hidden" style="background:rgba(255,0,80,0.1);border:1px solid rgba(255,0,80,0.4);border-left:3px solid #ff0050;color:#ff80a0;padding:12px 15px;border-radius:8px;margin-bottom:15px;font-family:'Rajdhani',sans-serif;font-size:13px;">
+                <i class="fas fa-times-circle mr-2"></i><span>Verifikasi gagal. Kredensial tidak dikenali.</span>
+            </div>
+            
+            <form id="formLogin" style="display:flex;flex-direction:column;gap:20px;">
+                <div>
+                    <label style="font-family:'Orbitron',sans-serif;font-size:11px;color:#00f0ff;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:8px;"><i class="fas fa-user-ninja mr-2"></i>ID Pengguna</label>
+                    <div style="position:relative;">
+                        <input type="text" id="loginUser" placeholder="Masukkan kode akses..." required style="width:100%;padding:14px 15px 14px 45px;background:rgba(0,240,255,0.05);border:1px solid rgba(0,240,255,0.3);border-radius:8px;color:#ffffff;font-family:'Rajdhani',sans-serif;font-size:15px;outline:none;transition:all 0.3s;">
+                        <i class="fas fa-user-astronaut" style="position:absolute;left:15px;top:50%;transform:translateY(-50%);color:#00f0ff;"></i>
+                    </div>
+                </div>
+                <div>
+                    <label style="font-family:'Orbitron',sans-serif;font-size:11px;color:#bf00ff;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:8px;"><i class="fas fa-fingerprint mr-2"></i>Kode Enkripsi</label>
+                    <div style="position:relative;">
+                        <input type="password" id="loginSandi" placeholder="••••••••••••" required style="width:100%;padding:14px 45px 14px 45px;background:rgba(191,0,255,0.05);border:1px solid rgba(191,0,255,0.3);border-radius:8px;color:#ffffff;font-family:'Rajdhani',sans-serif;font-size:15px;outline:none;transition:all 0.3s;">
+                        <i class="fas fa-key" style="position:absolute;left:15px;top:50%;transform:translateY(-50%);color:#bf00ff;"></i>
+                        <button type="button" id="toggleSandi" style="position:absolute;right:15px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,0.4);cursor:pointer;"><i class="fas fa-eye-slash"></i></button>
+                    </div>
+                </div>
+                <button type="submit" style="position:relative;padding:16px;background:linear-gradient(135deg,#00f0ff,#bf00ff);border:none;border-radius:10px;color:#0a0a1e;font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;overflow:hidden;transition:all 0.3s;box-shadow:0 0 30px rgba(0,240,255,0.4);">
+                    <span style="position:relative;z-index:2;"><i class="fas fa-plug mr-2"></i>HUBUNGKAN</span>
+                </button>
+            </form>
+            
+            <div style="margin-top:25px;padding:15px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px dashed rgba(255,255,255,0.1);">
+                <p style="font-family:'Share Tech Mono',monospace;font-size:11px;color:rgba(255,255,255,0.4);margin:0;line-height:1.6;">
+                    <span style="color:#00f0ff;">[ DEMO ACCOUNT ]</span><br>
+                    <span style="color:#bf00ff;">ID:</span> admin &nbsp;&nbsp; <span style="color:#bf00ff;">KEY:</span> admin123
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- HALAMAN UTAMA -->
+<div id="halamanUtama" class="hidden" style="position:relative;z-index:10;">
+    
+    <!-- HEADER -->
+    <header style="background:linear-gradient(90deg,rgba(10,10,30,0.95),rgba(20,0,40,0.95),rgba(10,10,30,0.95));border-bottom:1px solid rgba(0,240,255,0.3);padding:15px 30px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);">
+        <div style="display:flex;align-items:center;gap:20px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#00f0ff,#bf00ff);display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(0,240,255,0.5);">
+                    <i class="fas fa-cube" style="color:#0a0a1e;font-size:18px;"></i>
+                </div>
+                <div>
+                    <h1 style="font-family:'Orbitron',sans-serif;font-size:18px;font-weight:800;margin:0;background:linear-gradient(90deg,#00f0ff,#bf00ff);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:2px;">SPECIAL-ID NEXUS</h1>
+                    <p style="font-family:'Share Tech Mono',monospace;font-size:10px;color:rgba(0,240,255,0.6);margin:0;">v3.0 QUANTUM EDITION</p>
+                </div>
+            </div>
+            <div id="jamDigital" style="font-family:'Share Tech Mono',monospace;font-size:12px;color:#00f0ff;padding:8px 15px;background:rgba(0,240,255,0.08);border:1px solid rgba(0,240,255,0.2);border-radius:6px;border-left:3px solid #00f0ff;">--:--:--</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:15px;">
+            <button id="btnVoiceToggle" title="Aktifkan Suara AI" style="width:42px;height:42px;border-radius:10px;background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);color:#00ff88;cursor:pointer;transition:all 0.3s;">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <button id="btnNotif" style="position:relative;width:42px;height:42px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#ffffff;cursor:pointer;">
+                <i class="fas fa-bell" style="color:#00f0ff;"></i>
+                <span id="badgeNotif" class="hidden" style="position:absolute;top:-5px;right:-5px;width:18px;height:18px;background:#ff0050;border-radius:50%;font-size:10px;font-weight:bold;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;">0</span>
+            </button>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 15px;background:rgba(191,0,255,0.1);border:1px solid rgba(191,0,255,0.3);border-radius:8px;">
+                <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#bf00ff,#00f0ff);display:flex;align-items:center;justify-content:center;">
+                    <i class="fas fa-user" style="color:#fff;font-size:14px;"></i>
+                </div>
+                <span id="infoPengguna" style="font-family:'Rajdhani',sans-serif;font-size:13px;color:#ffffff;"></span>
+            </div>
+            <button id="btnKeluar" style="padding:10px 18px;background:rgba(255,0,80,0.1);border:1px solid rgba(255,0,80,0.4);border-radius:8px;color:#ff6080;font-family:'Rajdhani',sans-serif;font-size:13px;cursor:pointer;">
+                <i class="fas fa-sign-out-alt mr-2"></i>PUTUS
+            </button>
+        </div>
+    </header>
+
+    <div style="display:flex;min-height:700px;">
+        
+        <!-- SIDEBAR -->
+        <aside style="width:260px;background:linear-gradient(180deg,rgba(15,15,35,0.98),rgba(10,5,25,0.98));border-right:1px solid rgba(0,240,255,0.2);padding:20px 15px;overflow-y:auto;max-height:calc(100vh - 72px);position:sticky;top:72px;">
+            <div style="padding:15px;background:rgba(0,240,255,0.05);border:1px solid rgba(0,240,255,0.2);border-radius:10px;margin-bottom:20px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                    <div style="width:10px;height:10px;background:#00ff88;border-radius:50%;box-shadow:0 0 10px #00ff88;animation:pulseHijau 1.5s infinite;"></div>
+                    <span style="font-family:'Orbitron',sans-serif;font-size:11px;color:#00ff88;letter-spacing:1px;">SISTEM AKTIF</span>
+                </div>
+                <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:rgba(255,255,255,0.5);">
+                    <span id="voiceStatus">VOICE: <span style="color:#ff9600;">OFF</span></span>
+                </div>
+            </div>
+            
+            <nav style="display:flex;flex-direction:column;gap:3px;" id="sidebarNav">
+                <a class="sidebar-link active" data-halaman="dashboard" href="#"><i class="fas fa-chart-pie" style="width:20px;text-align:center;color:#00f0ff;"></i><span>Dashboard</span></a>
+                <a class="sidebar-link" data-halaman="pemilik" href="#"><i class="fas fa-user-tie" style="width:20px;text-align:center;color:#bf00ff;"></i><span>Data Pemilik</span></a>
+                <a class="sidebar-link" data-halaman="kamar" href="#"><i class="fas fa-bed" style="width:20px;text-align:center;color:#00ff88;"></i><span>Data Kamar</span></a>
+                <a class="sidebar-link" data-halaman="penyewa" href="#"><i class="fas fa-id-card" style="width:20px;text-align:center;color:#ffaa00;"></i><span>Data Penyewa</span><span style="margin-left:auto;font-size:9px;font-family:'Orbitron',sans-serif;color:#00f0ff;background:rgba(0,240,255,0.15);padding:2px 6px;border-radius:4px;">SCAN</span></a>
+                <a class="sidebar-link" data-halaman="pekerjaan" href="#"><i class="fas fa-briefcase" style="width:20px;text-align:center;color:#ff6600;"></i><span>Data Pekerjaan</span></a>
+                <a class="sidebar-link" data-halaman="promosi" href="#"><i class="fas fa-bullhorn" style="width:20px;text-align:center;color:#ff00aa;"></i><span>Promosi</span></a>
+                <a class="sidebar-link" data-halaman="sewa" href="#"><i class="fas fa-file-contract" style="width:20px;text-align:center;color:#00f0ff;"></i><span>Penyewaan</span></a>
+                <a class="sidebar-link" data-halaman="pembayaran" href="#"><i class="fas fa-wallet" style="width:20px;text-align:center;color:#00ff88;"></i><span>Pembayaran</span></a>
+                <a class="sidebar-link" data-halaman="jaminan" href="#"><i class="fas fa-shield-alt" style="width:20px;text-align:center;color:#bf00ff;"></i><span>Jaminan & Refund</span></a>
+                <a class="sidebar-link" data-halaman="pph" href="#"><i class="fas fa-calculator" style="width:20px;text-align:center;color:#ff9600;"></i><span>Kalkulator PPh 21</span></a>
+                <a class="sidebar-link" data-halaman="pengeluaran" href="#"><i class="fas fa-money-bill-wave" style="width:20px;text-align:center;color:#ff0050;"></i><span>Pengeluaran</span></a>
+                <a class="sidebar-link" data-halaman="laporan" href="#"><i class="fas fa-chart-line" style="width:20px;text-align:center;color:#00f0ff;"></i><span>Laporan</span></a>
+                <a class="sidebar-link" data-halaman="pengguna" href="#"><i class="fas fa-users-cog" style="width:20px;text-align:center;color:#bf00ff;"></i><span>Pengguna</span></a>
+                <a class="sidebar-link" data-halaman="profil" href="#"><i class="fas fa-cog" style="width:20px;text-align:center;color:#888;"></i><span>Pengaturan</span></a>
+            </nav>
+        </aside>
+
+        <!-- KONTEN UTAMA -->
+        <main style="flex:1;padding:30px;overflow-y:auto;">
+            
+            <!-- DASHBOARD -->
+            <section id="page-dashboard" class="halaman">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+                    <div>
+                        <h2 style="font-family:'Orbitron',sans-serif;font-size:26px;font-weight:700;color:#ffffff;margin:0;letter-spacing:1px;"><i class="fas fa-chart-network mr-3" style="color:#00f0ff;"></i>PUSAT KENDALI</h2>
+                        <p style="font-family:'Rajdhani',sans-serif;color:rgba(255,255,255,0.5);font-size:13px;margin-top:5px;">Memantau seluruh aktivitas sistem secara real-time</p>
+                    </div>
+                </div>
+                
+                <div id="panelJatuhTempo" class="hidden" style="background:linear-gradient(135deg,rgba(255,150,0,0.1),rgba(255,80,0,0.05));border:1px solid rgba(255,150,0,0.4);border-left:4px solid #ff9600;border-radius:12px;padding:20px;margin-bottom:25px;">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:15px;">
+                        <h3 style="font-family:'Orbitron',sans-serif;color:#ffcc80;font-size:15px;margin:0;"><i class="fas fa-exclamation-triangle mr-2"></i>PERINGATAN JATUH TEMPO</h3>
+                        <button onclick="tampilkanHalaman('sewa')" style="padding:6px 14px;background:rgba(255,150,0,0.2);border:1px solid rgba(255,150,0,0.4);border-radius:6px;color:#ffcc80;font-family:'Rajdhani',sans-serif;font-size:12px;cursor:pointer;">Lihat Detail</button>
+                    </div>
+                    <div id="daftarJatuhTempo" style="display:flex;flex-direction:column;gap:8px;"></div>
+                </div>
+                
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:25px;">
+                    <div class="stat-card cyber-cyan"><p style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00f0ff;letter-spacing:2px;text-transform:uppercase;margin:0 0 8px 0;">Total Kamar</p><p id="dTotalKamar" style="font-family:'Orbitron',sans-serif;font-size:36px;font-weight:800;color:#fff;margin:0;text-shadow:0 0 20px rgba(0,240,255,0.5);">0</p><i class="fas fa-home" style="position:absolute;bottom:15px;right:20px;font-size:40px;color:rgba(0,240,255,0.15);"></i></div>
+                    <div class="stat-card cyber-purple"><p style="font-family:'Orbitron',sans-serif;font-size:10px;color:#bf00ff;letter-spacing:2px;text-transform:uppercase;margin:0 0 8px 0;">Kamar Terisi</p><p id="dTerisi" style="font-family:'Orbitron',sans-serif;font-size:36px;font-weight:800;color:#fff;margin:0;text-shadow:0 0 20px rgba(191,0,255,0.5);">0/0</p><i class="fas fa-user-check" style="position:absolute;bottom:15px;right:20px;font-size:40px;color:rgba(191,0,255,0.15);"></i></div>
+                    <div class="stat-card cyber-green"><p style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00ff88;letter-spacing:2px;text-transform:uppercase;margin:0 0 8px 0;">Pendapatan</p><p id="dPendapatan" style="font-family:'Orbitron',sans-serif;font-size:22px;font-weight:800;color:#fff;margin:0;text-shadow:0 0 20px rgba(0,255,136,0.5);">Rp 0</p><i class="fas fa-coins" style="position:absolute;bottom:15px;right:20px;font-size:40px;color:rgba(0,255,136,0.15);"></i></div>
+                    <div class="stat-card cyber-orange"><p style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff9600;letter-spacing:2px;text-transform:uppercase;margin:0 0 8px 0;">Promosi Aktif</p><p id="dPromosi" style="font-family:'Orbitron',sans-serif;font-size:36px;font-weight:800;color:#fff;margin:0;text-shadow:0 0 20px rgba(255,150,0,0.5);">0</p><i class="fas fa-bullhorn" style="position:absolute;bottom:15px;right:20px;font-size:40px;color:rgba(255,150,0,0.15);"></i></div>
+                    <div class="stat-card cyber-pink"><p style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff00aa;letter-spacing:2px;text-transform:uppercase;margin:0 0 8px 0;">Laba Bersih</p><p id="dLaba" style="font-family:'Orbitron',sans-serif;font-size:22px;font-weight:800;color:#fff;margin:0;text-shadow:0 0 20px rgba(255,0,170,0.5);">Rp 0</p><i class="fas fa-chart-line" style="position:absolute;bottom:15px;right:20px;font-size:40px;color:rgba(255,0,170,0.15);"></i></div>
+                    <div class="stat-card cyber-red"><p style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff0050;letter-spacing:2px;text-transform:uppercase;margin:0 0 8px 0;">Jatuh Tempo</p><p id="dJatuhTempo" style="font-family:'Orbitron',sans-serif;font-size:36px;font-weight:800;color:#fff;margin:0;text-shadow:0 0 20px rgba(255,0,80,0.5);">0</p><i class="fas fa-clock" style="position:absolute;bottom:15px;right:20px;font-size:40px;color:rgba(255,0,80,0.15);"></i></div>
+                </div>
+                
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:25px;">
+                    <div style="background:rgba(15,15,35,0.8);border:1px solid rgba(0,240,255,0.2);border-radius:14px;padding:25px;"><h3 style="font-family:'Orbitron',sans-serif;font-size:14px;color:#00f0ff;margin:0 0 15px 0;"><i class="fas fa-bed mr-2"></i>STATUS OKUPANSI</h3><div style="height:260px;"><canvas id="grafikKamar"></canvas></div></div>
+                    <div style="background:rgba(15,15,35,0.8);border:1px solid rgba(191,0,255,0.2);border-radius:14px;padding:25px;"><h3 style="font-family:'Orbitron',sans-serif;font-size:14px;color:#bf00ff;margin:0 0 15px 0;"><i class="fas fa-chart-bar mr-2"></i>ANALISA KEUANGAN</h3><div style="height:260px;"><canvas id="grafikKeuangan"></canvas></div></div>
+                </div>
+                
+                <div style="background:rgba(15,15,35,0.8);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:25px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                        <h3 style="font-family:'Orbitron',sans-serif;font-size:14px;color:#fff;margin:0;"><i class="fas fa-users mr-2" style="color:#00ff88;"></i>PENYEWA AKTIF</h3>
+                        <div style="display:flex;gap:10px;">
+                            <button onclick="eksporExcel('penyewaAktif')" style="padding:8px 14px;background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);border-radius:6px;color:#00ff88;font-family:'Rajdhani',sans-serif;font-size:12px;cursor:pointer;"><i class="fas fa-file-excel mr-1"></i>EXCEL</button>
+                            <button onclick="eksporPDF('penyewaAktif')" style="padding:8px 14px;background:rgba(255,0,80,0.1);border:1px solid rgba(255,0,80,0.3);border-radius:6px;color:#ff6080;font-family:'Rajdhani',sans-serif;font-size:12px;cursor:pointer;"><i class="fas fa-file-pdf mr-1"></i>PDF</button>
+                        </div>
+                    </div>
+                    <div style="overflow-x:auto;"><table class="data-table" style="width:100%;border-collapse:collapse;"><thead><tr style="border-bottom:2px solid rgba(0,240,255,0.3);"><th>Kode</th><th>Nama</th><th>Kamar</th><th>Kontak</th><th>Periode</th><th style="text-align:right;">Biaya</th><th style="text-align:center;">Status</th></tr></thead><tbody id="tbodyPenyewaAktif"></tbody></table></div>
+                </div>
+            </section>
+
+            <!-- DATA PEMILIK -->
+            <section id="page-pemilik" class="halaman hidden">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+                    <h2 style="font-family:'Orbitron',sans-serif;font-size:22px;color:#bf00ff;margin:0;"><i class="fas fa-user-tie mr-3"></i>DATA PEMILIK</h2>
+                </div>
+                <div style="background:rgba(15,15,35,0.8);border:1px solid rgba(191,0,255,0.2);border-radius:14px;padding:30px;max-width:800px;">
+                    <form id="formPemilik" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+                        <div style="grid-column:span 2;"><label style="font-family:'Orbitron',sans-serif;font-size:11px;color:#bf00ff;letter-spacing:1px;display:block;margin-bottom:6px;">Nama Lengkap</label><input type="text" id="pemilikNama" class="cyber-input" required></div>
+                        <div><label style="font-family:'Orbitron',sans-serif;font-size:11px;color:#bf00ff;letter-spacing:1px;display:block;margin-bottom:6px;">NIK</label><input type="text" id="pemilikNIK" class="cyber-input"></div>
+                        <div><label style="font-family:'Orbitron',sans-serif;font-size:11px;color:#bf00ff;letter-spacing:1px;display:block;margin-bottom:6px;">NPWP</label><input type="text" id="pemilikNPWP" class="cyber-input"></div>
+                        <div><label style="font-family:'Orbitron',sans-serif;font-size:11px;color:#bf00ff;letter-spacing:1px;display:block;margin-bottom:6px;">Status Perkawinan</label><select id="pemilikStatusKawin" class="cyber-input"><option value="TK/0">TK/0</option><option value="TK/1">TK/1</option><option value="TK/2">TK/2</option><option value="TK/3">TK/3</option><option value="K/0">K/0</option><option value="K/1">K/1</option><option value="K/2">K/2</option><option value="K/3">K/3</option></select></div>
+                        <div><label style="font-family:'Orbitron',sans-serif;font-size:11px;color:#bf00ff;letter-spacing:1px;display:block;margin-bottom:6px;">Telepon</label><input type="tel" id="pemilikTelepon" class="cyber-input"></div>
+                        <div><label style="font-family:'Orbitron',sans-serif;font-size:11px;color:#bf00ff;letter-spacing:1px;display:block;margin-bottom:6px;">Email</label><input type="email" id="pemilikEmail" class="cyber-input"></div>
+                        <div style="grid-column:span 2;"><label style="font-family:'Orbitron',sans-serif;font-size:11px;color:#bf00ff;letter-spacing:1px;display:block;margin-bottom:6px;">Alamat</label><textarea id="pemilikAlamat" class="cyber-input" rows="2"></textarea></div>
+                        <div><label style="font-family:'Orbitron',sans-serif;font-size:11px;color:#bf00ff;letter-spacing:1px;display:block;margin-bottom:6px;">Nama Usaha</label><input type="text" id="pemilikUsaha" class="cyber-input"></div>
+                        <div><label style="font-family:'Orbitron',sans-serif;font-size:11px;color:#bf00ff;letter-spacing:1px;display:block;margin-bottom:6px;">Bank / Rekening</label><input type="text" id="pemilikRekening" class="cyber-input"></div>
+                        <div style="grid-column:span 2;"><button type="submit" class="btn-cyber-primary" style="width:100%;"><i class="fas fa-save mr-2"></i>SIMPAN DATA PEMILIK</button></div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- DATA KAMAR -->
+            <section id="page-kamar" class="halaman hidden">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+                    <h2 style="font-family:'Orbitron',sans-serif;font-size:22px;color:#00ff88;margin:0;"><i class="fas fa-bed mr-3"></i>DATA KAMAR</h2>
+                    <div style="display:flex;gap:10px;">
+                        <button onclick="eksporExcel('kamar')" class="btn-cyber-secondary" style="font-size:12px;padding:8px 14px;"><i class="fas fa-file-excel mr-1"></i>EXCEL</button>
+                        <button onclick="eksporPDF('kamar')" class="btn-cyber-secondary" style="font-size:12px;padding:8px 14px;"><i class="fas fa-file-pdf mr-1"></i>PDF</button>
+                        <button onclick="formKamar()" class="btn-cyber-primary" style="font-size:12px;padding:8px 18px;"><i class="fas fa-plus mr-1"></i>TAMBAH</button>
+                    </div>
+                </div>
+                <div style="background:rgba(15,15,35,0.8);border:1px solid rgba(0,255,136,0.2);border-radius:14px;overflow:hidden;">
+                    <table class="data-table" style="width:100%;border-collapse:collapse;"><thead><tr style="border-bottom:2px solid rgba(0,255,136,0.3);"><th>Kode</th><th>Nomor</th><th>Tipe</th><th>Fasilitas</th><th style="text-align:right;">Harga/Bulan</th><th style="text-align:center;">Status</th><th style="text-align:center;">Aksi</th></tr></thead><tbody id="tbodyKamar"></tbody></table>
+                </div>
+            </section>
+
+            <!-- DATA PENYEWA -->
+            <section id="page-penyewa" class="halaman hidden">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+                    <h2 style="font-family:'Orbitron',sans-serif;font-size:22px;color:#ffaa00;margin:0;"><i class="fas fa-id-card mr-3"></i>DATA PENYEWA</h2>
+                    <div style="display:flex;gap:10px;">
+                        <button onclick="eksporExcel('penyewa')" class="btn-cyber-secondary" style="font-size:12px;padding:8px 14px;"><i class="fas fa-file-excel mr-1"></i>EXCEL</button>
+                        <button onclick="eksporPDF('penyewa')" class="btn-cyber-secondary" style="font-size:12px;padding:8px 14px;"><i class="fas fa-file-pdf mr-1"></i>PDF</button>
+                        <button onclick="formPenyewa()" class="btn-cyber-primary" style="font-size:12px;padding:8px 18px;"><i class="fas fa-plus mr-1"></i>TAMBAH</button>
+                    </div>
+                </div>
+                <div style="background:rgba(15,15,35,0.8);border:1px solid rgba(255,170,0,0.2);border-radius:14px;overflow:hidden;">
+                    <table class="data-table" style="width:100%;border-collapse:collapse;"><thead><tr style="border-bottom:2px solid rgba(255,170,0,0.3);"><th>Kode</th><th>Nama</th><th>No. Identitas</th><th>Telepon</th><th>Alamat</th><th style="text-align:center;">Aksi</th></tr></thead><tbody id="tbodyPenyewa"></tbody></table>
+                </div>
+            </section>
+
+            <!-- DATA PEKERJAAN -->
+            <section id="page-pekerjaan" class="halaman hidden">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+                    <h2 style="font-family:'Orbitron',sans-serif;font-size:22px;color:#ff6600;margin:0;"><i class="fas fa-briefcase mr-3"></i>DATA PEKERJAAN</h2>
+                    <button onclick="formPekerjaan()" class="btn-cyber-primary" style="font-size:12px;padding:8px 18px;"><i class="fas fa-plus mr-1"></i>TAMBAH</button>
+                </div>
+                <div style="background:rgba(15,15,35,0.8);border:1px solid rgba(255,102,0,0.2);border-radius:14px;overflow:hidden;">
+                    <table class="data-table" style="width:100%;border-collapse:collapse;"><thead><tr style="border-bottom:2px solid rgba(255,102,0,0.3);"><th>Kode</th><th>Nama Pekerjaan</th><th>Penanggung Jawab</th><th>Tanggal Mulai</th><th>Target Selesai</th><th style="text-align:center;">Status</th><th style="text-align:center;">Aksi</th></tr></thead><tbody id="tbodyPekerjaan"></tbody></table>
+                </div>
+            </section>
+
+            <!-- PROMOSI -->
+            <section id="page-promosi" class="halaman hidden">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+                    <h2 style="font-family:'Orbitron',sans-serif;font-size:22px;color:#ff00aa;margin:0;"><i class="fas fa-bullhorn mr-3"></i>PROMOSI & DISKON</h2>
+                    <button onclick="formPromosi()" class="btn-cyber-primary" style="font-size:12px;padding:8px 18px;"><i class="fas fa-plus mr-1"></i>BUAT PROMOSI</button>
+                </div>
+                <div style="background:rgba(15,15,35,0.8);border:1px solid rgba(255,0,170,0.2);border-radius:14px;overflow:hidden;">
+                    <table class="data-table" style="width:100%;border-collapse:collapse;"><thead><tr style="border-bottom:2px solid rgba(255,0,170,0.3);"><th>Kode</th><th>Nama</th><th>Tipe</th><th>Nilai</th><th>Berlaku</th><th style="text-align:center;">Status</th><th style="text-align:center;">Aksi</th></tr></thead><tbody id="tbodyPromosi"></tbody></table>
+                </div>
+            </section>
+
+            <!-- PENYEWAAN -->
+            <section id="page-sewa" class="halaman hidden">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+                    <h2 style="font-family:'Orbitron',sans-serif;font-size:22px;color:#00f0ff;margin:0;"><i class="fas fa-file-contract mr-3"></i>PENYEWAAN</h2>
+                    <div style="display:flex;gap:10px;">
+                        <button onclick="eksporExcel('sewa')" class="btn-cyber-secondary" style="font-size:12px;padding:8px 14px;"><i class="fas fa-file-excel mr-1"></i>EXCEL</button>
+                        <button onclick="eksporPDF('sewa')" class="btn-cyber-secondary" style="font-size:12px;padding:8px 14px;"><i class="fas fa-file-pdf mr-1"></i>PDF</button>
+                        <button onclick="formSewa()" class="btn-cyber-primary" style="font-size:12px;padding:8px 18px;"><i class="fas fa-plus mr-1"></i>TAMBAH</button>
+                    </div>
+                </div>
+                <div style="background:rgba(15,15,35,0.8);border:1px solid rgba(0,240,255,0.2);border-radius:14px;overflow:hidden;">
+                    <table class="data-table" style="width:100%;border-collapse:collapse;"><thead><tr style="border-bottom:2px solid rgba(0,240,255,0.3);"><th>No. Kontrak</th><th>Penyewa</th><th>Kamar</th><th>Periode</th><th style="text-align:right;">Biaya</th><th style="text-align:right;">Jaminan</th><th style="text-align:center;">Status</th><th style="text-align:center;">Aksi</th></tr></thead><tbody id="tbodySewa"></tbody></table>
+                </div>
+            </section>
+
+            <!-- PEMBAYARAN -->
+            <section id="page-pembayaran" class="halaman hidden">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+                    <h2 style="font-family:'Orbitron',sans-serif;font-size:22px;color:#00ff88;margin:0;"><i class="fas fa-wallet mr-3"></i>PEMBAYARAN</h2>
+                    <div style="display:flex;gap:10px;">
+                        <button onclick="eksporExcel('pembayaran')" class="btn-cyber-secondary" style="font-size:12px;padding:8px 14px;"><i class="fas fa-file-excel mr-1"></i>EXCEL</button>
+                        <button onclick="eksporPDF('pembayaran')" class="btn-cyber-secondary" style="font-size:12px;padding:8px 14px;"><i class="fas fa-file-pdf mr-1"></i>PDF</button>
+                        <button onclick="formPembayaran()" class="btn-cyber-primary" style="font-size:12px;padding:8px 18px;"><i class="fas fa-plus mr-1"></i>CATAT</button>
+                    </div>
+                </div>
+                <div style="background:rgba(15,15,35,0.8);border:1px solid rgba(0,255,136,0.2);border-radius:14px;overflow:hidden;">
+                    <table class="data-table" style="width:100%;border-collapse:collapse;"><thead><tr style="border-bottom:2px solid rgba(0,255,136,0.3);"><th>No. Bukti</th><th>Penyewa</th><th>Periode</th><th>Jenis</th><th style="text-align:right;">Tagihan</th><th style="text-align:right;">Dibayar</th><th>Metode</th><th style="text-align:center;">Status</th><th style="text-align:center;">Aksi</th></tr></thead><tbody id="tbodyBayar"></tbody></table>
+                </div>
+            </section>
+
+            <!-- JAMINAN -->
+            <section id="page-jaminan" class="halaman hidden">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+                    <h2 style="font-family:'Orbitron',sans-serif;font-size:22px;color:#bf00ff;margin:0;"><i class="fas fa-shield-alt mr-3"></i>JAMINAN & PENGEMBALIAN</h2>
+                    <div style="display:flex;gap:10px;">
+                        <button onclick="eksporExcel('jaminan')" class="btn-cyber-secondary" style="font-size:12px;padding:8px 14px;"><i class="fas fa-file-excel mr-1"></i>EXCEL</button>
+                        <button onclick="eksporPDF('jaminan')" class="btn-cyber-secondary" style="font-size:12px;padding:8px 14px;"><i class="fas fa-file-pdf mr-1"></i>PDF</button>
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:25px;">
+                    <div class="stat-card cyber-cyan" style="padding:18px;"><p style="font-family:'Orbitron',sans-serif;font-size:9px;color:#00f0ff;letter-spacing:1px;margin:0 0 5px 0;">TOTAL DITERIMA</p><p id="dJaminanTotal" style="font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;color:#fff;margin:0;">Rp 0</p></div>
+                    <div class="stat-card cyber-orange" style="padding:18px;"><p style="font-family:'Orbitron',sans-serif;font-size:9px;color:#ff9600;letter-spacing:1px;margin:0 0 5px 0;">DITAHAN</p><p id="dJaminanDitahan" style="font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;color:#fff;margin:0;">Rp 0</p></div>
+                    <div class="stat-card cyber-green" style="padding:18px;"><p style="font-family:'Orbitron',sans-serif;font-size:9px;color:#00ff88;letter-spacing:1px;margin:0 0 5px 0;">DIKEMBALIKAN</p><p id="dJaminanKembali" style="font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;color:#fff;margin:0;">Rp 0</p></div>
+                    <div class="stat-card cyber-red" style="padding:18px;"><p style="font-family:'Orbitron',sans-serif;font-size:9px;color:#ff0050;letter-spacing:1px;margin:0 0 5px 0;">DIPOTONG</p><p id="dJaminanPotong" style="font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;color:#fff;margin:0;">Rp 0</p></div>
+                </div>
+                <div style="background:rgba(15,15,35,0.8);border:1px solid rgba(191,0,255,0.2);border-radius:14px;overflow:hidden;">
+                    <table class="data-table" style="width:100%;border-collapse:collapse;"><thead><tr style="border-bottom:2px solid rgba(191,0,255,0.3);"><th>Kode</th><th>Penyewa</th><th>Kamar</th><th style="text-align:right;">Jumlah</th><th>Tanggal</th><th style="text-align:center;">Status</th><th>Keterangan</th><th style="text-align:center;">Aksi</th></tr></thead><tbody id="tbodyJaminan"></tbody></table>
+                </div>
+            </section>
+
+            <!-- KALKULATOR PPH 21 -->
+            <section id="page-pph" class="halaman hidden">
+                <h2 style="font-family:'Orbitron',sans-serif;font-size:22px;color:#ff9600;margin:0 0 25px 0;"><i class="fas fa-calculator mr-3"></i>KALKULATOR PPh PASAL 21</h2>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                    <div style="background:rgba(15,15,35,0.8);border:1px solid rgba(255,150,0,0.2);border-radius:14px;padding:25px;">
+                        <h3 style="font-family:'Orbitron',sans-serif;color:#ff9600;font-size:14px;margin:0 0 20px 0;"><i class="fas fa-keyboard mr-2"></i>DATA INPUT</h3>
+                        <form id="formPPH" style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+                            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff9600;letter-spacing:1px;display:block;margin-bottom:5px;">Penghasilan Bruto/Bln</label><input type="number" id="pphBruto" class="cyber-input" value="0" min="0"></div>
+                            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff9600;letter-spacing:1px;display:block;margin-bottom:5px;">PTKP</label><select id="pphPTKP" class="cyber-input"><option value="TK/0">TK/0 - 54jt</option><option value="TK/1">TK/1 - 58.5jt</option><option value="TK/2">TK/2 - 63jt</option><option value="TK/3">TK/3 - 67.5jt</option><option value="K/0">K/0 - 58.5jt</option><option value="K/1">K/1 - 63jt</option><option value="K/2">K/2 - 67.5jt</option><option value="K/3">K/3 - 72jt</option></select></div>
+                            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff9600;letter-spacing:1px;display:block;margin-bottom:5px;">Biaya Jabatan (%)</label><input type="number" id="pphBiayaJabatan" class="cyber-input" value="5" min="0"></div>
+                            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff9600;letter-spacing:1px;display:block;margin-bottom:5px;">Iuran Pensiun/Bln</label><input type="number" id="pphPensiun" class="cyber-input" value="0" min="0"></div>
+                            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff9600;letter-spacing:1px;display:block;margin-bottom:5px;">BPJS/Bln</label><input type="number" id="pphBPJS" class="cyber-input" value="0" min="0"></div>
+                            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff9600;letter-spacing:1px;display:block;margin-bottom:5px;">Periode</label><select id="pphPeriode" class="cyber-input"><option value="bulanan">Bulanan</option><option value="tahunan">Tahunan</option></select></div>
+                            <div style="grid-column:span 2;display:flex;gap:10px;"><button type="button" onclick="hitungPPH()" class="btn-cyber-primary" style="flex:1;"><i class="fas fa-calculator mr-2"></i>HITUNG</button><button type="button" onclick="resetPPH()" class="btn-cyber-secondary" style="padding:12px 20px;"><i class="fas fa-redo"></i></button></div>
+                        </form>
+                    </div>
+                    <div style="background:rgba(15,15,35,0.8);border:1px solid rgba(255,150,0,0.2);border-radius:14px;padding:25px;">
+                        <h3 style="font-family:'Orbitron',sans-serif;color:#ff9600;font-size:14px;margin:0 0 20px 0;"><i class="fas fa-file-invoice mr-2"></i>HASIL PERHITUNGAN</h3>
+                        <div id="hasilPPH" style="font-family:'Rajdhani',sans-serif;color:rgba(255,255,255,0.5);text-align:center;padding:40px 20px;"><i class="fas fa-calculator" style="font-size:48px;opacity:0.3;display:block;margin-bottom:15px;"></i>Masukkan data dan klik HITUNG</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PENGELUARAN -->
+            <section id="page-pengeluaran" class="halaman hidden">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+                    <h2 style="font-family:'Orbitron',sans-serif;font-size:22px;color:#ff0050;margin:0;"><i class="fas fa-money-bill-wave mr-3"></i>PENGELUARAN</h2>
+                    <div style="display:flex;gap:10px;">
+                        <button onclick="eksporExcel('pengeluaran')" class="btn-cyber-secondary" style="font-size:12px;padding:8px 14px;"><i class="fas fa-file-excel mr-1"></i>EXCEL</button>
+                        <button onclick="eksporPDF('pengeluaran')" class="btn-cyber-secondary" style="font-size:12px;padding:8px 14px;"><i class="fas fa-file-pdf mr-1"></i>PDF</button>
+                        <button onclick="formPengeluaran()" class="btn-cyber-primary" style="font-size:12px;padding:8px 18px;"><i class="fas fa-plus mr-1"></i>CATAT</button>
+                    </div>
+                </div>
+                <div style="background:rgba(15,15,35,0.8);border:1px solid rgba(255,0,80,0.2);border-radius:14px;overflow:hidden;">
+                    <table class="data-table" style="width:100%;border-collapse:collapse;"><thead><tr style="border-bottom:2px solid rgba(255,0,80,0.3);"><th>No</th><th>Tanggal</th><th>Jenis Biaya</th><th>Keterangan</th><th style="text-align:right;">Jumlah</th><th style="text-align:center;">Aksi</th></tr></thead><tbody id="tbodyPengeluaran"></tbody></table>
+                </div>
+            </section>
+
+            <!-- LAPORAN -->
+            <section id="page-laporan" class="halaman hidden">
+                <h2 style="font-family:'Orbitron',sans-serif;font-size:22px;color:#00f0ff;margin:0 0 25px 0;"><i class="fas fa-chart-line mr-3"></i>LAPORAN LABA/RUGI</h2>
+                <div style="background:rgba(15,15,35,0.8);border:1px solid rgba(0,240,255,0.2);border-radius:14px;padding:25px;margin-bottom:20px;">
+                    <div style="display:flex;gap:15px;align-items:flex-end;flex-wrap:wrap;">
+                        <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00f0ff;letter-spacing:1px;display:block;margin-bottom:5px;">Bulan</label><select id="filterBulan" class="cyber-input" style="width:160px;"></select></div>
+                        <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00f0ff;letter-spacing:1px;display:block;margin-bottom:5px;">Tahun</label><select id="filterTahun" class="cyber-input" style="width:120px;"></select></div>
+                        <button onclick="tampilkanLaporan()" class="btn-cyber-primary" style="padding:12px 24px;">TAMPILKAN</button>
+                        <button onclick="eksporExcelLaporan()" class="btn-cyber-secondary" style="padding:12px 20px;"><i class="fas fa-file-excel mr-1"></i>EXCEL</button>
+                        <button onclick="window.print()" class="btn-cyber-secondary" style="padding:12px 20px;"><i class="fas fa-print mr-1"></i>CETAK</button>
+                    </div>
+                </div>
+                <div id="areaLaporan" class="hidden" style="background:rgba(15,15,35,0.8);border:1px solid rgba(0,240,255,0.2);border-radius:14px;padding:30px;">
+                    <div style="text-align:center;border-bottom:2px solid rgba(0,240,255,0.3);padding-bottom:20px;margin-bottom:25px;">
+                        <h3 style="font-family:'Orbitron',sans-serif;font-size:24px;background:linear-gradient(90deg,#00f0ff,#bf00ff);-webkit-background-clip:text;background-clip:text;color:transparent;margin:0;">SPECIAL-ID NEXUS</h3>
+                        <p style="font-family:'Rajdhani',sans-serif;color:rgba(255,255,255,0.5);margin:5px 0;">LAPORAN LABA / RUGI</p>
+                        <p id="periodeLaporan" style="font-family:'Orbitron',sans-serif;color:#fff;font-weight:600;margin:0;">Periode —</p>
+                    </div>
+                    <div id="isiLaporan"></div>
+                </div>
+            </section>
+
+            <!-- PENGGUNA -->
+            <section id="page-pengguna" class="halaman hidden">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+                    <h2 style="font-family:'Orbitron',sans-serif;font-size:22px;color:#bf00ff;margin:0;"><i class="fas fa-users-cog mr-3"></i>MANAJEMEN PENGGUNA</h2>
+                    <button onclick="formPengguna()" class="btn-cyber-primary" style="font-size:12px;padding:8px 18px;"><i class="fas fa-plus mr-1"></i>TAMBAH</button>
+                </div>
+                <div style="background:rgba(15,15,35,0.8);border:1px solid rgba(191,0,255,0.2);border-radius:14px;overflow:hidden;">
+                    <table class="data-table" style="width:100%;border-collapse:collapse;"><thead><tr style="border-bottom:2px solid rgba(191,0,255,0.3);"><th>Username</th><th>Nama Lengkap</th><th>Hak Akses</th><th style="text-align:center;">Aksi</th></tr></thead><tbody id="tbodyPengguna"></tbody></table>
+                </div>
+            </section>
+
+            <!-- PENGATURAN -->
+            <section id="page-profil" class="halaman hidden">
+                <h2 style="font-family:'Orbitron',sans-serif;font-size:22px;color:#fff;margin:0 0 25px 0;"><i class="fas fa-cog mr-3"></i>PENGATURAN AKUN</h2>
+                <div style="background:rgba(15,15,35,0.8);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:30px;max-width:500px;">
+                    <form id="formProfil" style="display:flex;flex-direction:column;gap:15px;">
+                        <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00f0ff;letter-spacing:1px;display:block;margin-bottom:5px;">Username</label><input type="text" id="pUsername" class="cyber-input" readonly style="opacity:0.6;"></div>
+                        <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00f0ff;letter-spacing:1px;display:block;margin-bottom:5px;">Nama Lengkap</label><input type="text" id="pNama" class="cyber-input" required></div>
+                        <hr style="border-color:rgba(255,255,255,0.1);">
+                        <p style="font-family:'Rajdhani',sans-serif;color:rgba(255,255,255,0.5);font-size:12px;margin:0;">Kosongkan jika tidak ingin mengubah sandi</p>
+                        <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#bf00ff;letter-spacing:1px;display:block;margin-bottom:5px;">Sandi Saat Ini</label><input type="password" id="pSandiLama" class="cyber-input"></div>
+                        <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#bf00ff;letter-spacing:1px;display:block;margin-bottom:5px;">Sandi Baru</label><input type="password" id="pSandiBaru" class="cyber-input"></div>
+                        <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#bf00ff;letter-spacing:1px;display:block;margin-bottom:5px;">Konfirmasi Sandi</label><input type="password" id="pSandiKonfirm" class="cyber-input"></div>
+                        <button type="submit" class="btn-cyber-primary" style="width:100%;"><i class="fas fa-save mr-2"></i>SIMPAN PERUBAHAN</button>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+    </div>
+</div>
+
+<!-- AI ASSISTANT DENGAN VOICE -->
+<div id="aiAssistant" style="position:fixed;bottom:30px;right:30px;z-index:1000;display:none;">
+    <button id="aiToggleBtn" style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#00f0ff,#bf00ff);border:none;cursor:pointer;box-shadow:0 0 30px rgba(0,240,255,0.5);position:relative;display:flex;align-items:center;justify-content:center;animation:aiFloat 3s ease-in-out infinite;">
+        <div style="position:absolute;width:100%;height:100%;border-radius:50%;border:2px solid rgba(0,240,255,0.5);animation:holoPulse 2s infinite;"></div>
+        <i class="fas fa-robot" style="font-size:28px;color:#0a0a1e;position:relative;z-index:2;"></i>
+        <span style="position:absolute;top:-3px;right:-3px;width:18px;height:18px;background:#00ff88;border-radius:50%;border:2px solid #0a0a1e;animation:pulseHijau 1.5s infinite;"></span>
+    </button>
+    
+    <div id="aiChatPanel" style="position:absolute;bottom:85px;right:0;width:400px;background:linear-gradient(135deg,rgba(10,10,30,0.98),rgba(20,0,40,0.98));border:1px solid rgba(0,240,255,0.3);border-radius:16px;overflow:hidden;box-shadow:0 0 50px rgba(0,240,255,0.3);display:none;">
+        <div style="background:linear-gradient(90deg,rgba(0,240,255,0.2),rgba(191,0,255,0.2));padding:15px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(0,240,255,0.2);">
+            <div style="position:relative;width:40px;height:40px;border-radius:50%;background:radial-gradient(circle,#00f0ff,#bf00ff);display:flex;align-items:center;justify-content:center;">
+                <i class="fas fa-brain" style="color:#0a0a1e;font-size:18px;"></i>
+                <span style="position:absolute;bottom:0;right:0;width:12px;height:12px;background:#00ff88;border-radius:50%;border:2px solid rgba(10,10,30,0.98);"></span>
+            </div>
+            <div style="flex:1;">
+                <h4 style="font-family:'Orbitron',sans-serif;color:#fff;font-size:13px;margin:0;letter-spacing:1px;">NEXUS AI</h4>
+                <p id="aiStatusChat" style="font-family:'Share Tech Mono',monospace;font-size:10px;color:#00ff88;margin:0;">[ ONLINE ] Siap mendengarkan</p>
+            </div>
+            <button id="aiVoiceBtn" title="Voice Input" style="width:36px;height:36px;border-radius:50%;background:rgba(255,150,0,0.15);border:1px solid rgba(255,150,0,0.3);color:#ff9600;cursor:pointer;margin-right:5px;transition:all 0.3s;">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button id="aiVoiceSpeakBtn" title="Toggle Voice Output" style="width:36px;height:36px;border-radius:50%;background:rgba(0,255,136,0.15);border:1px solid rgba(0,255,136,0.3);color:#00ff88;cursor:pointer;margin-right:5px;transition:all 0.3s;">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <button id="aiCloseBtn" style="background:none;border:none;color:rgba(255,255,255,0.5);cursor:pointer;font-size:18px;padding:5px;"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <div id="aiMessages" style="height:350px;overflow-y:auto;padding:15px;display:flex;flex-direction:column;gap:12px;"></div>
+        
+        <div style="padding:10px 15px;border-top:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;flex-wrap:wrap;">
+            <button onclick="aiQuickAsk('ringkasan sistem')" class="ai-quick-btn" style="padding:5px 10px;background:rgba(0,240,255,0.1);border:1px solid rgba(0,240,255,0.2);border-radius:15px;color:#00f0ff;font-family:'Rajdhani',sans-serif;font-size:11px;cursor:pointer;">Ringkasan</button>
+            <button onclick="aiQuickAsk('siapa penyewa aktif')" class="ai-quick-btn" style="padding:5px 10px;background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.2);border-radius:15px;color:#00ff88;font-family:'Rajdhani',sans-serif;font-size:11px;cursor:pointer;">Penyewa</button>
+            <button onclick="aiQuickAsk('bagaimana keuangan')" class="ai-quick-btn" style="padding:5px 10px;background:rgba(191,0,255,0.1);border:1px solid rgba(191,0,255,0.2);border-radius:15px;color:#bf00ff;font-family:'Rajdhani',sans-serif;font-size:11px;cursor:pointer;">Keuangan</button>
+            <button onclick="aiQuickAsk('kamar tersedia')" class="ai-quick-btn" style="padding:5px 10px;background:rgba(255,150,0,0.1);border:1px solid rgba(255,150,0,0.2);border-radius:15px;color:#ff9600;font-family:'Rajdhani',sans-serif;font-size:11px;cursor:pointer;">Kamar</button>
+        </div>
+        
+        <div style="padding:12px 15px;border-top:1px solid rgba(0,240,255,0.15);display:flex;gap:8px;align-items:center;">
+            <button id="aiMicBtn" title="Tekan untuk bicara" style="width:42px;height:42px;border-radius:50%;background:rgba(255,0,80,0.1);border:1px solid rgba(255,0,80,0.3);color:#ff0050;cursor:pointer;flex-shrink:0;transition:all 0.3s;">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <input type="text" id="aiInput" placeholder="Ketik atau tekan mikrofon..." style="flex:1;padding:10px 14px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,240,255,0.2);border-radius:20px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:13px;outline:none;">
+            <button id="aiSendBtn" style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#00f0ff,#bf00ff);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#0a0a1e;flex-shrink:0;">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal" style="position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;">
+    <div style="background:linear-gradient(135deg,rgba(15,15,35,0.98),rgba(25,10,50,0.98));border:1px solid rgba(0,240,255,0.3);border-radius:16px;max-width:550px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 0 60px rgba(0,240,255,0.3);">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 25px;border-bottom:1px solid rgba(0,240,255,0.2);">
+            <h3 id="judulModal" style="font-family:'Orbitron',sans-serif;color:#00f0ff;font-size:15px;letter-spacing:1px;margin:0;"></h3>
+            <button id="tutupModal" style="background:none;border:none;color:rgba(255,255,255,0.5);cursor:pointer;font-size:24px;line-height:1;">×</button>
+        </div>
+        <div id="isiModal" style="padding:25px;"></div>
+    </div>
+</div>
+
+<!-- PESAN -->
+<div id="pesan" style="position:fixed;bottom:30px;left:50%;transform:translateX(-50%);padding:14px 28px;border-radius:10px;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;color:#fff;z-index:3000;display:none;box-shadow:0 0 30px rgba(0,0,0,0.5);"></div>
+
+<script>
+// ============================================================
+// CSS INJECTION
+// ============================================================
+(function(){
+    var s = document.createElement('style');
+    s.textContent = `
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; padding: 0;
+            background: linear-gradient(135deg, #050510 0%, #0a0520 50%, #050515 100%);
+            min-height: 100vh; color: #ffffff;
+            font-family: 'Rajdhani', sans-serif; overflow-x: hidden;
+        }
+        .hologram-grid {
+            background-image: linear-gradient(rgba(0,240,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(0,240,255,0.3) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(60deg);
+            transform-origin: center top;
+            mask-image: linear-gradient(to bottom, black, transparent 70%);
+        }
+        @keyframes rotateRing { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }
+        @keyframes holoPulse { 0%,100% { transform: scale(1); opacity: 0.5;} 50% { transform: scale(1.1); opacity: 0.8;} }
+        @keyframes holoRotate { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }
+        @keyframes coreFloat { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-10px);} }
+        @keyframes particleOrbit { 0% { transform: rotate(0deg) translateX(110px) rotate(0deg);} 100% { transform: rotate(360deg) translateX(110px) rotate(-360deg);} }
+        @keyframes pulseHijau { 0%,100% { box-shadow: 0 0 0 0 rgba(0,255,136,0.7);} 50% { box-shadow: 0 0 0 8px rgba(0,255,136,0);} }
+        @keyframes aiFloat { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-8px);} }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: translateY(0);} }
+        @keyframes typing { 0%,60%,100% { transform: translateY(0); opacity: 0.4;} 30% { transform: translateY(-5px); opacity: 1;} }
+        @keyframes micPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,0,80,0.7);} 50% { box-shadow: 0 0 0 15px rgba(255,0,80,0);} }
+        
+        .cyber-input {
+            width: 100%; padding: 12px 15px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(0,240,255,0.25);
+            border-radius: 8px; color: #ffffff;
+            font-family: 'Rajdhani', sans-serif; font-size: 14px;
+            outline: none; transition: all 0.3s;
+        }
+        .cyber-input:focus {
+            border-color: #00f0ff;
+            box-shadow: 0 0 20px rgba(0,240,255,0.25);
+        }
+        .cyber-input option { background: #1a1a2e; color: #fff; }
+        
+        .btn-cyber-primary {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #00f0ff, #bf00ff);
+            border: none; border-radius: 8px;
+            color: #0a0a1e; font-family: 'Orbitron', sans-serif;
+            font-size: 13px; font-weight: 700; letter-spacing: 1px;
+            cursor: pointer; transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(0,240,255,0.3);
+        }
+        .btn-cyber-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 35px rgba(0,240,255,0.5);
+        }
+        .btn-cyber-secondary {
+            padding: 12px 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px; color: #ffffff;
+            font-family: 'Rajdhani', sans-serif; font-size: 13px;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .btn-cyber-secondary:hover {
+            border-color: #00f0ff;
+            box-shadow: 0 0 15px rgba(0,240,255,0.2);
+        }
+        
+        .sidebar-link {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 15px; border-radius: 8px;
+            color: rgba(255,255,255,0.7); text-decoration: none;
+            font-family: 'Rajdhani', sans-serif; font-size: 14px;
+            transition: all 0.3s;
+        }
+        .sidebar-link:hover {
+            background: rgba(0,240,255,0.1);
+            border-left: 3px solid #00f0ff;
+            color: #fff; transform: translateX(5px);
+        }
+        .sidebar-link.active {
+            background: linear-gradient(90deg, rgba(0,240,255,0.2), transparent);
+            border-left: 3px solid #00f0ff;
+            color: #00f0ff;
+            box-shadow: 0 0 20px rgba(0,240,255,0.2);
+        }
+        
+        .stat-card {
+            border-radius: 14px; padding: 22px;
+            position: relative; overflow: hidden;
+            transition: all 0.3s; cursor: pointer;
+        }
+        .stat-card.cyber-cyan { background: linear-gradient(135deg, rgba(0,240,255,0.12), rgba(0,50,80,0.05)); border: 1px solid rgba(0,240,255,0.3);}
+        .stat-card.cyber-purple { background: linear-gradient(135deg, rgba(191,0,255,0.12), rgba(50,0,80,0.05)); border: 1px solid rgba(191,0,255,0.3);}
+        .stat-card.cyber-green { background: linear-gradient(135deg, rgba(0,255,136,0.12), rgba(0,80,40,0.05)); border: 1px solid rgba(0,255,136,0.3);}
+        .stat-card.cyber-orange { background: linear-gradient(135deg, rgba(255,150,0,0.12), rgba(80,40,0,0.05)); border: 1px solid rgba(255,150,0,0.3);}
+        .stat-card.cyber-pink { background: linear-gradient(135deg, rgba(255,0,170,0.12), rgba(80,0,50,0.05)); border: 1px solid rgba(255,0,170,0.3);}
+        .stat-card.cyber-red { background: linear-gradient(135deg, rgba(255,0,80,0.12), rgba(80,0,20,0.05)); border: 1px solid rgba(255,0,80,0.3);}
+        .stat-card:hover { transform: translateY(-5px); }
+        
+        .data-table th {
+            padding: 14px 15px; text-align: left;
+            font-family: 'Orbitron', sans-serif; font-size: 10px;
+            color: #00f0ff; letter-spacing: 1px; text-transform: uppercase;
+            background: rgba(0,240,255,0.05);
+        }
+        .data-table td {
+            padding: 14px 15px;
+            font-family: 'Rajdhani', sans-serif; font-size: 13px;
+            color: rgba(255,255,255,0.85);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .data-table tbody tr:hover { background: rgba(0,240,255,0.05); }
+        
+        .status-aktif { padding: 4px 12px; background: rgba(0,240,255,0.15); border: 1px solid rgba(0,240,255,0.3); border-radius: 20px; font-size: 11px; color: #00f0ff; font-family: 'Orbitron', sans-serif;}
+        .status-tersedia { padding: 4px 12px; background: rgba(0,255,136,0.15); border: 1px solid rgba(0,255,136,0.3); border-radius: 20px; font-size: 11px; color: #00ff88; font-family: 'Orbitron', sans-serif;}
+        .status-lunas { padding: 4px 12px; background: rgba(0,255,136,0.15); border: 1px solid rgba(0,255,136,0.3); border-radius: 20px; font-size: 11px; color: #00ff88; font-family: 'Orbitron', sans-serif;}
+        .status-ditahan { padding: 4px 12px; background: rgba(255,150,0,0.15); border: 1px solid rgba(255,150,0,0.3); border-radius: 20px; font-size: 11px; color: #ff9600; font-family: 'Orbitron', sans-serif;}
+        .status-dikembalikan { padding: 4px 12px; background: rgba(0,255,136,0.15); border: 1px solid rgba(0,255,136,0.3); border-radius: 20px; font-size: 11px; color: #00ff88; font-family: 'Orbitron', sans-serif;}
+        .status-dipotong { padding: 4px 12px; background: rgba(255,0,80,0.15); border: 1px solid rgba(255,0,80,0.3); border-radius: 20px; font-size: 11px; color: #ff0050; font-family: 'Orbitron', sans-serif;}
+        
+        .action-btn {
+            background: none; border: none; cursor: pointer;
+            padding: 6px 8px; border-radius: 6px;
+            transition: all 0.2s; font-size: 14px;
+        }
+        .action-btn.edit { color: #00f0ff; }
+        .action-btn.edit:hover { background: rgba(0,240,255,0.15); }
+        .action-btn.delete { color: #ff0050; }
+        .action-btn.delete:hover { background: rgba(255,0,80,0.15); }
+        .action-btn.success { color: #00ff88; }
+        .action-btn.success:hover { background: rgba(0,255,136,0.15); }
+        
+        .halaman { animation: fadeInUp 0.4s ease-out; }
+        .hidden { display: none !important; }
+        
+        .typing-dot { display: inline-block; width: 6px; height: 6px; background: #00f0ff; border-radius: 50%; margin: 0 2px; animation: typing 1.2s infinite;}
+        .typing-dot:nth-child(2) { animation-delay: 0.2s;}
+        .typing-dot:nth-child(3) { animation-delay: 0.4s;}
+        
+        .mic-active { animation: micPulse 1s infinite; background: rgba(255,0,80,0.3) !important; border-color: #ff0050 !important;}
+        
+        ::-webkit-scrollbar { width: 6px;}
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05);}
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #00f0ff, #bf00ff); border-radius: 3px;}
+        
+        @media (max-width: 900px) { .login-box { grid-template-columns: 1fr !important;} }
+        @media (max-width: 768px) { aside { display: none;} }
+    `;
+    document.head.appendChild(s);
+})();
+
+// ============================================================
+// DATABASE
+// ============================================================
+const DB = {
+    pemilik:{}, kamar:[], penyewa:[], pekerjaan:[], promosi:[], sewa:[],
+    pembayaran:[], jaminan:[], pengeluaran:[], pengguna:[], aktif:null,
+    inisialisasi(){
+        try{
+            const s = JSON.parse(localStorage.getItem('specialid_nexus_v3_full')||'null');
+            if(s){ for(const k of ['pemilik','kamar','penyewa','pekerjaan','promosi','sewa','pembayaran','jaminan','pengeluaran','pengguna']) this[k] = s[k] || this[k]; }
+        }catch(e){}
+        if(!this.pengguna.length){
+            this.pengguna = [{username:'admin', namaLengkap:'Administrator', password:'admin123', hakAkses:'Administrator'}];
+            this.simpan();
+        }
+        if(!this.kamar.length){
+            this.kamar = [
+                {kode:'KMR-0001', nomor:'A-01', tipe:'Deluxe', fasilitas:'AC, WiFi, Kamar Mandi Dalam, TV', harga:1500000},
+                {kode:'KMR-0002', nomor:'A-02', tipe:'Standar', fasilitas:'AC, WiFi, Kamar Mandi Luar', harga:1000000},
+                {kode:'KMR-0003', nomor:'A-03', tipe:'Premium', fasilitas:'AC, WiFi, Kamar Mandi Dalam, TV, Kulkas', harga:2000000},
+                {kode:'KMR-0004', nomor:'B-01', tipe:'Deluxe', fasilitas:'AC, WiFi, Kamar Mandi Dalam, TV', harga:1500000},
+                {kode:'KMR-0005', nomor:'B-02', tipe:'Standar', fasilitas:'AC, WiFi, Kamar Mandi Luar', harga:1000000},
+            ];
+            this.penyewa = [
+                {kode:'PYW-0001', nama:'Ahmad Rizki', identitas:'3201010101010001', telepon:'081234567890', alamat:'Jl. Merdeka No. 1, Jakarta'},
+                {kode:'PYW-0002', nama:'Siti Nurhaliza', identitas:'3201010101010002', telepon:'081234567891', alamat:'Jl. Sudirman No. 5, Bandung'},
+                {kode:'PYW-0003', nama:'Budi Santoso', identitas:'3201010101010003', telepon:'081234567892', alamat:'Jl. Gatot Subroto No. 10, Surabaya'},
+            ];
+            this.sewa = [
+                {kode:'SWA-0001', kodeKamar:'KMR-0001', kodePenyewa:'PYW-0001', tanggalMulai:'2026-01-01', tanggalSelesai:'2026-12-31', biaya:1500000, jaminan:1500000, status:'Aktif'},
+                {kode:'SWA-0002', kodeKamar:'KMR-0003', kodePenyewa:'PYW-0002', tanggalMulai:'2026-03-15', tanggalSelesai:'2026-09-25', biaya:2000000, jaminan:2000000, status:'Aktif'},
+                {kode:'SWA-0003', kodeKamar:'KMR-0002', kodePenyewa:'PYW-0003', tanggalMulai:'2026-02-10', tanggalSelesai:'2026-09-30', biaya:1000000, jaminan:1000000, status:'Aktif'},
+            ];
+            this.pembayaran = [
+                {kode:'BYR-0001', kodeSewa:'SWA-0001', jenis:'sewa', periode:'2026-09', tagihan:1500000, diskon:0, jumlah:1500000, metode:'Transfer BCA', referensi:'TRF-001', status:'Lunas'},
+                {kode:'BYR-0002', kodeSewa:'SWA-0002', jenis:'sewa', periode:'2026-09', tagihan:2000000, diskon:0, jumlah:2000000, metode:'QRIS', referensi:'QR-001', status:'Lunas'},
+                {kode:'BYR-0003', kodeSewa:'SWA-0003', jenis:'sewa', periode:'2026-08', tagihan:1000000, diskon:0, jumlah:1000000, metode:'Tunai', referensi:'', status:'Lunas'},
+            ];
+            this.jaminan = [
+                {kode:'JMN-0001', kodeSewa:'SWA-0001', namaPenyewa:'Ahmad Rizki', kamar:'A-01', jumlah:1500000, tanggal:'2026-01-01', status:'Ditahan', keterangan:''},
+                {kode:'JMN-0002', kodeSewa:'SWA-0002', namaPenyewa:'Siti Nurhaliza', kamar:'A-03', jumlah:2000000, tanggal:'2026-03-15', status:'Ditahan', keterangan:''},
+                {kode:'JMN-0003', kodeSewa:'SWA-0003', namaPenyewa:'Budi Santoso', kamar:'A-02', jumlah:1000000, tanggal:'2026-02-10', status:'Ditahan', keterangan:''},
+            ];
+            this.pengeluaran = [
+                {tanggal:'2026-09-01', jenis:'Listrik', jumlah:1500000, keterangan:'Tagihan bulan Agustus'},
+                {tanggal:'2026-09-05', jenis:'Internet', jumlah:500000, keterangan:'Biaya bulanan'},
+                {tanggal:'2026-09-10', jenis:'Perawatan', jumlah:300000, keterangan:'Perbaikan keran'},
+            ];
+            this.pekerjaan = [
+                {kode:'PKJ-0001', nama:'Perbaikan Atap', penanggungJawab:'Tukang Ahmad', tanggalMulai:'2026-09-15', tanggalTarget:'2026-09-20', status:'Berlangsung'},
+            ];
+            this.promosi = [
+                {kode:'PRM-0001', nama:'Diskon Pelajar', tipe:'Potongan (%)', nilai:10, tanggalMulai:'2026-01-01', tanggalSelesai:'2026-12-31', status:'Berlaku'},
+            ];
+            this.pemilik = {nama:'Bapak Kos Sejahtera', nik:'3201010101010000', npwp:'00.000.000.0-000.000', statusKawin:'K/1', telepon:'081234567890', email:'kos@sejahtera.com', alamat:'Jl. Damai No. 1', namaUsaha:'Kos Sejahtera', rekening:'BCA 1234567890'};
+            this.simpan();
+        }
+        const sesi = localStorage.getItem('specialid_nexus_aktif');
+        if(sesi && this.pengguna.find(u=>u.username===sesi)) this.aktif = sesi;
+    },
+    simpan(){
+        localStorage.setItem('specialid_nexus_v3_full', JSON.stringify({
+            pemilik:this.pemilik, kamar:this.kamar, penyewa:this.penyewa,
+            pekerjaan:this.pekerjaan, promosi:this.promosi, sewa:this.sewa,
+            pembayaran:this.pembayaran, jaminan:this.jaminan,
+            pengeluaran:this.pengeluaran, pengguna:this.pengguna
+        }));
+    },
+    buatKode(jenis){
+        const awalan = {kamar:'KMR',penyewa:'PYW',pekerjaan:'PKJ',promosi:'PRM',sewa:'SWA',bayar:'BYR',jaminan:'JMN'}[jenis];
+        const arr = jenis==='bayar'?this.pembayaran:jenis==='jaminan'?this.jaminan:this[jenis];
+        return awalan + '-' + String(arr.length+1).padStart(4,'0');
+    },
+    statusKamar(kode){
+        return this.sewa.some(s=>s.kodeKamar===kode && s.status==='Aktif') ? 'Terisi' : 'Tersedia';
+    }
+};
+
+function formatUang(a){ return 'Rp ' + new Intl.NumberFormat('id-ID').format(a||0); }
+function formatTanggal(t){
+    if(!t) return '-';
+    return new Date(t).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'});
+}
+function v(id){ return (document.getElementById(id).value||'').trim(); }
+function pesan(teks, tipe){
+    tipe = tipe || 'sukses';
+    const el = document.getElementById('pesan');
+    el.textContent = teks;
+    el.style.background = tipe === 'error' ? 'linear-gradient(135deg, #ff0050, #aa0030)' : 'linear-gradient(135deg, #00f0ff, #0088aa)';
+    el.style.display = 'block';
+    el.style.animation = 'fadeInUp 0.3s ease-out';
+    setTimeout(() => { el.style.display = 'none'; }, 3500);
+}
+function bukaModal(judul, isi){
+    document.getElementById('judulModal').textContent = judul;
+    document.getElementById('isiModal').innerHTML = isi;
+    document.getElementById('modal').style.display = 'flex';
+}
+function tutupModal(){ document.getElementById('modal').style.display = 'none'; }
+
+// ============================================================
+// PARTIKEL
+// ============================================================
+(function initPartikel(){
+    const canvas = document.createElement('canvas');
+    document.getElementById('partikelCanvas').appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    resize(); window.addEventListener('resize', resize);
+    const partikel = [];
+    for(let i = 0; i < 80; i++){
+        partikel.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, vx:(Math.random()-0.5)*0.5, vy:(Math.random()-0.5)*0.5, r:Math.random()*2+1, warna:Math.random()>0.5?'0,240,255':'191,0,255'});
+    }
+    function animasi(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        for(let i=0;i<partikel.length;i++){
+            const p=partikel[i]; p.x+=p.vx; p.y+=p.vy;
+            if(p.x<0||p.x>canvas.width)p.vx*=-1; if(p.y<0||p.y>canvas.height)p.vy*=-1;
+            ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(${p.warna},0.6)`; ctx.fill();
+            for(let j=i+1;j<partikel.length;j++){
+                const p2=partikel[j], dx=p.x-p2.x, dy=p.y-p2.y, jarak=Math.sqrt(dx*dx+dy*dy);
+                if(jarak<120){ ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(p2.x,p2.y); ctx.strokeStyle=`rgba(0,240,255,${0.15*(1-jarak/120)})`; ctx.lineWidth=0.5; ctx.stroke(); }
+            }
+        }
+        requestAnimationFrame(animasi);
+    }
+    animasi();
+})();
+
+// ============================================================
+// VOICE SYSTEM
+// ============================================================
+const VoiceSystem = {
+    speechEnabled: false,
+    recognition: null,
+    recognizing: false,
+    init(){
+        if('speechSynthesis' in window){
+            this.speechEnabled = true;
+            window.speechSynthesis.onvoiceschanged = () => { this.voices = window.speechSynthesis.getVoices(); };
+        }
+        if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window){
+            const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+            this.recognition = new SR();
+            this.recognition.continuous = false;
+            this.recognition.interimResults = false;
+            this.recognition.lang = 'id-ID';
+            this.recognition.onstart = () => { this.recognizing = true; this.updateMicUI(true); };
+            this.recognition.onend = () => { this.recognizing = false; this.updateMicUI(false); };
+            this.recognition.onerror = (e) => { console.error('Voice error:', e); this.recognizing = false; this.updateMicUI(false); };
+            this.recognition.onresult = (e) => {
+                const teks = e.results[0][0].transcript;
+                document.getElementById('aiInput').value = teks;
+                this.kirimPesanAI(teks);
+            };
+        }
+    },
+    speak(teks){
+        if(!this.speechEnabled || !this.voiceOutput) return;
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(teks);
+        u.lang = 'id-ID'; u.rate = 1; u.pitch = 1.1;
+        if(this.voices){
+            const idVoice = this.voices.find(v => v.lang.includes('id'));
+            if(idVoice) u.voice = idVoice;
+        }
+        window.speechSynthesis.speak(u);
+    },
+    startListening(){
+        if(this.recognition && !this.recognizing){
+            try{ this.recognition.start(); }
+            catch(e){ console.error(e); }
+        }
+    },
+    updateMicUI(aktif){
+        const btns = document.querySelectorAll('#aiMicBtn, #aiVoiceBtn');
+        btns.forEach(b => {
+            if(aktif){ b.classList.add('mic-active'); b.style.color = '#fff'; }
+            else{ b.classList.remove('mic-active'); b.style.color = ''; }
+        });
+        const status = document.getElementById('aiStatusChat');
+        if(status) status.textContent = aktif ? '[ MENDENGARKAN... ]' : '[ ONLINE ] Siap mendengarkan';
+    },
+    voiceOutput: true,
+    kirimPesanAI: null // akan di-set oleh AI system
+};
+
+// ============================================================
+// LOGIN
+// ============================================================
+DB.inisialisasi();
+VoiceSystem.init();
+
+document.getElementById('toggleSandi').addEventListener('click', function(){
+    const i = document.getElementById('loginSandi');
+    i.type = i.type === 'password' ? 'text' : 'password';
+    this.innerHTML = i.type === 'password' ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+});
+
+(function aiWelcomeAnim(){
+    const teks = [
+        "› Selamat datang di sistem generasi mendatang.",
+        "› Saya NEXUS AI, asisten cerdas dengan kemampuan suara.",
+        "› Sistem terhubung dengan jaringan quantum terenkripsi.",
+        "› Verifikasi identitas Anda untuk memulai sesi."
+    ];
+    let idx = 0;
+    const el = document.getElementById('aiWelcomeText');
+    setInterval(() => {
+        el.style.opacity = '0';
+        setTimeout(() => { idx = (idx+1)%teks.length; el.innerHTML = teks[idx]; el.style.opacity = '1'; el.style.transition = 'opacity 0.5s'; }, 500);
+    }, 4000);
+})();
+
+document.getElementById('formLogin').addEventListener('submit', function(e){
+    e.preventDefault();
+    const user = document.getElementById('loginUser').value.trim();
+    const sandi = document.getElementById('loginSandi').value;
+    const ditemukan = DB.pengguna.find(u => u.username === user && u.password === sandi);
+    if(ditemukan){
+        DB.aktif = user;
+        localStorage.setItem('specialid_nexus_aktif', user);
+        document.getElementById('loginError').classList.add('hidden');
+        setTimeout(() => { tampilkanUtama(); pesan('Sistem terhubung. Selamat datang, ' + ditemukan.namaLengkap + '!'); setTimeout(aktifkanAI, 1500); }, 500);
+    } else {
+        document.getElementById('loginError').classList.remove('hidden');
+    }
+});
+
+function tampilkanUtama(){
+    document.getElementById('halamanLogin').classList.add('hidden');
+    document.getElementById('halamanUtama').classList.remove('hidden');
+    const p = DB.pengguna.find(u => u.username === DB.aktif);
+    document.getElementById('infoPengguna').textContent = p?.namaLengkap || DB.aktif;
+    updateJam();
+    muatFilterLaporan();
+    tampilkanHalaman('dashboard');
+}
+
+document.getElementById('btnKeluar').addEventListener('click', function(){
+    localStorage.removeItem('specialid_nexus_aktif');
+    DB.aktif = null; location.reload();
+});
+
+function updateJam(){
+    const el = document.getElementById('jamDigital');
+    if(el){
+        const now = new Date();
+        el.innerHTML = '<i class="fas fa-clock mr-2" style="color:#00f0ff;"></i>' +
+            now.toLocaleDateString('id-ID', {weekday:'short', day:'2-digit', month:'short', year:'numeric'}) +
+            ' | ' + now.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+    }
+    setTimeout(updateJam, 1000);
+}
+
+// ============================================================
+// NAVIGASI
+// ============================================================
+document.querySelectorAll('.sidebar-link').forEach(link => {
+    link.addEventListener('click', function(e){
+        e.preventDefault();
+        tampilkanHalaman(this.dataset.halaman);
+    });
+});
+
+function tampilkanHalaman(nama){
+    document.querySelectorAll('.halaman').forEach(h => h.classList.add('hidden'));
+    const target = document.getElementById('page-' + nama);
+    if(target) target.classList.remove('hidden');
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    const aktif = document.querySelector('[data-halaman="' + nama + '"]');
+    if(aktif) aktif.classList.add('active');
+    
+    const muat = {
+        dashboard:muatDashboard, pemilik:muatPemilik, kamar:muatKamar, penyewa:muatPenyewa,
+        pekerjaan:muatPekerjaan, promosi:muatPromosi, sewa:muatSewa, pembayaran:muatPembayaran,
+        jaminan:muatJaminan, pph:muatPPH, pengeluaran:muatPengeluaran,
+        pengguna:muatPengguna, profil:muatProfil
+    }[nama];
+    if(muat) muat();
+}
+
+// ============================================================
+// DASHBOARD
+// ============================================================
+let gKamar=null, gKeuangan=null;
+function muatDashboard(){
+    const totalKamar = DB.kamar.length;
+    const terisi = DB.kamar.filter(k => DB.statusKamar(k.kode) === 'Terisi').length;
+    const kosong = totalKamar - terisi;
+    const pendapatan = DB.pembayaran.filter(p => p.status === 'Lunas').reduce((s,p) => s+p.jumlah, 0);
+    const pengeluaran = DB.pengeluaran.reduce((s,b) => s+b.jumlah, 0);
+    const laba = pendapatan - pengeluaran;
+    const promosiAktif = DB.promosi.filter(p => p.status === 'Berlaku').length;
+    
+    document.getElementById('dTotalKamar').textContent = totalKamar;
+    document.getElementById('dTerisi').textContent = terisi + '/' + totalKamar;
+    document.getElementById('dPendapatan').textContent = formatUang(pendapatan);
+    document.getElementById('dPromosi').textContent = promosiAktif;
+    document.getElementById('dLaba').textContent = formatUang(laba);
+    
+    const hariIni = new Date();
+    const tujuhHari = new Date(hariIni.getTime() + 7*24*60*60*1000);
+    const daftarJT = [];
+    DB.sewa.filter(s => s.status === 'Aktif').forEach(s => {
+        if(s.tanggalSelesai){
+            const tgl = new Date(s.tanggalSelesai);
+            if(tgl >= hariIni && tgl <= tujuhHari){
+                const pyw = DB.penyewa.find(p => p.kode === s.kodePenyewa);
+                const kmr = DB.kamar.find(k => k.kode === s.kodeKamar);
+                daftarJT.push({nama: pyw?.nama, kamar: kmr?.nomor, tanggal: s.tanggalSelesai});
+            }
+        }
+    });
+    document.getElementById('dJatuhTempo').textContent = daftarJT.length;
+    
+    const panel = document.getElementById('panelJatuhTempo');
+    const daftarEl = document.getElementById('daftarJatuhTempo');
+    if(daftarJT.length > 0){
+        panel.classList.remove('hidden');
+        daftarEl.innerHTML = daftarJT.map(d => `
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 15px;background:rgba(255,150,0,0.1);border-radius:6px;font-family:'Rajdhani',sans-serif;font-size:13px;">
+                <span style="color:#ffcc80;"><strong>${d.nama}</strong> — Kamar ${d.kamar}</span>
+                <span style="color:#ff9600;font-weight:600;">${formatTanggal(d.tanggal)}</span>
+            </div>
+        `).join('');
+    } else { panel.classList.add('hidden'); }
+    
+    const badge = document.getElementById('badgeNotif');
+    if(daftarJT.length > 0){ badge.textContent = daftarJT.length; badge.classList.remove('hidden'); }
+    else badge.classList.add('hidden');
+    
+    const ctx1 = document.getElementById('grafikKamar').getContext('2d');
+    if(gKamar) gKamar.destroy();
+    gKamar = new Chart(ctx1, {
+        type:'doughnut',
+        data:{labels:['Terisi','Tersedia'],datasets:[{data:[terisi,kosong],backgroundColor:['#00f0ff','rgba(255,255,255,0.1)'],borderColor:['#00f0ff','rgba(255,255,255,0.2)'],borderWidth:2,hoverOffset:10}]},
+        options:{responsive:true,maintainAspectRatio:false,cutout:'70%',plugins:{legend:{position:'bottom',labels:{color:'rgba(255,255,255,0.7)',font:{family:'Rajdhani',size:12},padding:20,usePointStyle:true}}},animation:{animateRotate:true,duration:1500,easing:'easeOutQuart'}}
+    });
+    
+    const ctx2 = document.getElementById('grafikKeuangan').getContext('2d');
+    if(gKeuangan) gKeuangan.destroy();
+    gKeuangan = new Chart(ctx2, {
+        type:'bar',
+        data:{labels:['Pendapatan','Pengeluaran','Laba'],datasets:[{data:[pendapatan,pengeluaran,laba],backgroundColor:['rgba(0,255,136,0.7)','rgba(255,0,80,0.7)',laba>=0?'rgba(0,240,255,0.7)':'rgba(255,0,80,0.7)'],borderColor:['#00ff88','#ff0050',laba>=0?'#00f0ff':'#ff0050'],borderWidth:1,borderRadius:8}]},
+        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'rgba(255,255,255,0.5)',font:{family:'Rajdhani'},callback:function(v){return 'Rp'+(v/1000000)+'jt'}}},x:{grid:{display:false},ticks:{color:'rgba(255,255,255,0.7)',font:{family:'Rajdhani'}}}},animation:{duration:1500,easing:'easeOutBounce'}}
+    });
+    
+    const tbody = document.getElementById('tbodyPenyewaAktif');
+    const sewaAktif = DB.sewa.filter(s => s.status === 'Aktif');
+    tbody.innerHTML = sewaAktif.length ? sewaAktif.map(s => {
+        const pyw = DB.penyewa.find(p => p.kode === s.kodePenyewa);
+        const kmr = DB.kamar.find(k => k.kode === s.kodeKamar);
+        return `<tr><td style="font-family:'Share Tech Mono',monospace;font-size:11px;color:#00f0ff;">${pyw?.kode||'-'}</td><td style="font-weight:600;">${pyw?.nama||'-'}</td><td style="color:#bf00ff;">${kmr?.nomor||'-'}</td><td style="font-size:12px;color:rgba(255,255,255,0.6);">${pyw?.telepon||'-'}</td><td style="font-size:12px;">${formatTanggal(s.tanggalMulai)} - ${formatTanggal(s.tanggalSelesai)}</td><td style="text-align:right;font-weight:600;color:#00ff88;">${formatUang(s.biaya)}</td><td style="text-align:center;"><span class="status-aktif">AKTIF</span></td></tr>`;
+    }).join('') : `<tr><td colspan="7" style="text-align:center;padding:40px;color:rgba(255,255,255,0.4);"><i class="fas fa-inbox" style="font-size:36px;display:block;margin-bottom:10px;opacity:0.3;"></i>Belum ada penyewa aktif</td></tr>`;
+}
+
+// ============================================================
+// DATA PEMILIK
+// ============================================================
+function muatPemilik(){
+    const p = DB.pemilik;
+    ['pemilikNama','pemilikNIK','pemilikNPWP','pemilikStatusKawin','pemilikTelepon','pemilikEmail','pemilikAlamat','pemilikUsaha','pemilikRekening'].forEach((id,i)=>{
+        document.getElementById(id).value = [p.nama,p.nik,p.npwp,p.statusKawin,p.telepon,p.email,p.alamat,p.namaUsaha,p.rekening][i] || '';
+    });
+}
+document.getElementById('formPemilik').addEventListener('submit', function(e){
+    e.preventDefault();
+    DB.pemilik = {nama:v('pemilikNama'), nik:v('pemilikNIK'), npwp:v('pemilikNPWP'), statusKawin:document.getElementById('pemilikStatusKawin').value, telepon:v('pemilikTelepon'), email:v('pemilikEmail'), alamat:v('pemilikAlamat'), namaUsaha:v('pemilikUsaha'), rekening:v('pemilikRekening')};
+    DB.simpan(); pesan('Data pemilik berhasil disimpan');
+});
+
+// ============================================================
+// DATA KAMAR
+// ============================================================
+function muatKamar(){
+    document.getElementById('tbodyKamar').innerHTML = DB.kamar.map(k => {
+        const st = DB.statusKamar(k.kode);
+        return `<tr><td style="font-family:'Share Tech Mono',monospace;font-size:11px;color:#00ff88;">${k.kode}</td><td style="font-weight:600;">${k.nomor}</td><td>${k.tipe}</td><td style="font-size:12px;color:rgba(255,255,255,0.6);">${k.fasilitas||'-'}</td><td style="text-align:right;font-weight:600;">${formatUang(k.harga)}</td><td style="text-align:center;"><span class="${st==='Terisi'?'status-aktif':'status-tersedia'}">${st.toUpperCase()}</span></td><td style="text-align:center;"><button class="action-btn edit" onclick="formKamar('${k.kode}')"><i class="fas fa-edit"></i></button><button class="action-btn delete" onclick="hapusKamar('${k.kode}')"><i class="fas fa-trash"></i></button></td></tr>`;
+    }).join('') || `<tr><td colspan="7" style="text-align:center;padding:40px;color:rgba(255,255,255,0.4);">Belum ada data kamar</td></tr>`;
+}
+function formKamar(kode){
+    const k = kode ? DB.kamar.find(x => x.kode === kode) : null;
+    bukaModal(k ? 'UBAH KAMAR' : 'TAMBAH KAMAR', `
+        <form id="formKamar" style="display:flex;flex-direction:column;gap:15px;">
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00ff88;letter-spacing:1px;display:block;margin-bottom:5px;">Nomor Kamar</label><input type="text" id="kmrNomor" class="cyber-input" value="${k?.nomor||''}" required></div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00ff88;letter-spacing:1px;display:block;margin-bottom:5px;">Tipe</label><select id="kmrTipe" class="cyber-input"><option ${k?.tipe==='Standar'?'selected':''}>Standar</option><option ${k?.tipe==='Deluxe'?'selected':''}>Deluxe</option><option ${k?.tipe==='Premium'?'selected':''}>Premium</option></select></div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00ff88;letter-spacing:1px;display:block;margin-bottom:5px;">Fasilitas</label><textarea id="kmrFasilitas" class="cyber-input" rows="2">${k?.fasilitas||''}</textarea></div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00ff88;letter-spacing:1px;display:block;margin-bottom:5px;">Harga Sewa/Bulan (Rp)</label><input type="number" id="kmrHarga" class="cyber-input" value="${k?.harga||''}" required min="0"></div>
+            <div style="display:flex;gap:10px;"><button type="button" onclick="tutupModal()" class="btn-cyber-secondary" style="flex:1;">BATAL</button><button type="submit" class="btn-cyber-primary" style="flex:1;">SIMPAN</button></div>
+        </form>
+    `);
+    document.getElementById('formKamar').addEventListener('submit', function(e){
+        e.preventDefault();
+        const d = {kode:k?.kode||DB.buatKode('kamar'), nomor:v('kmrNomor'), tipe:document.getElementById('kmrTipe').value, fasilitas:v('kmrFasilitas'), harga:Number(document.getElementById('kmrHarga').value)};
+        if(k) Object.assign(k, d); else DB.kamar.push(d);
+        DB.simpan(); tutupModal(); muatKamar(); muatDashboard();
+        pesan(k ? 'Data kamar diperbarui' : 'Kamar berhasil ditambahkan');
+    });
+}
+function hapusKamar(kode){
+    if(confirm('Hapus kamar ini?')){ DB.kamar = DB.kamar.filter(k => k.kode !== kode); DB.simpan(); muatKamar(); muatDashboard(); pesan('Kamar dihapus'); }
+}
+
+// ============================================================
+// DATA PENYEWA
+// ============================================================
+function muatPenyewa(){
+    document.getElementById('tbodyPenyewa').innerHTML = DB.penyewa.map(p => {
+        return `<tr><td style="font-family:'Share Tech Mono',monospace;font-size:11px;color:#ffaa00;">${p.kode}</td><td style="font-weight:600;">${p.nama}</td><td>${p.identitas||'-'}</td><td>${p.telepon||'-'}</td><td style="font-size:12px;color:rgba(255,255,255,0.6);">${p.alamat||'-'}</td><td style="text-align:center;"><button class="action-btn edit" onclick="formPenyewa('${p.kode}')"><i class="fas fa-edit"></i></button><button class="action-btn delete" onclick="hapusPenyewa('${p.kode}')"><i class="fas fa-trash"></i></button></td></tr>`;
+    }).join('') || `<tr><td colspan="6" style="text-align:center;padding:40px;color:rgba(255,255,255,0.4);">Belum ada data penyewa</td></tr>`;
+}
+function formPenyewa(kode){
+    const p = kode ? DB.penyewa.find(x => x.kode === kode) : null;
+    bukaModal(p ? 'UBAH PENYEWA' : 'TAMBAH PENYEWA', `
+        <form id="formPenyewa" style="display:flex;flex-direction:column;gap:15px;">
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ffaa00;letter-spacing:1px;display:block;margin-bottom:5px;">Kode</label><input type="text" id="pywKode" class="cyber-input" value="${p?.kode||DB.buatKode('penyewa')}" required></div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ffaa00;letter-spacing:1px;display:block;margin-bottom:5px;">Nama Lengkap</label><input type="text" id="pywNama" class="cyber-input" value="${p?.nama||''}" required></div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ffaa00;letter-spacing:1px;display:block;margin-bottom:5px;">No. Identitas</label><input type="text" id="pywIdentitas" class="cyber-input" value="${p?.identitas||''}"></div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ffaa00;letter-spacing:1px;display:block;margin-bottom:5px;">Telepon</label><input type="tel" id="pywTelepon" class="cyber-input" value="${p?.telepon||''}"></div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ffaa00;letter-spacing:1px;display:block;margin-bottom:5px;">Alamat</label><textarea id="pywAlamat" class="cyber-input" rows="2">${p?.alamat||''}</textarea></div>
+            <div style="display:flex;gap:10px;"><button type="button" onclick="tutupModal()" class="btn-cyber-secondary" style="flex:1;">BATAL</button><button type="submit" class="btn-cyber-primary" style="flex:1;">SIMPAN</button></div>
+        </form>
+    `);
+    document.getElementById('formPenyewa').addEventListener('submit', function(e){
+        e.preventDefault();
+        const d = {kode:v('pywKode'), nama:v('pywNama'), identitas:v('pywIdentitas'), telepon:v('pywTelepon'), alamat:v('pywAlamat')};
+        if(p){ Object.assign(p, d); }
+        else { if(DB.penyewa.some(x => x.kode === d.kode)){ pesan('Kode sudah ada!','error'); return; } DB.penyewa.push(d); }
+        DB.simpan(); tutupModal(); muatPenyewa(); muatDashboard();
+        pesan(p ? 'Data diperbarui' : 'Penyewa ditambahkan');
+    });
+}
+
+function hapusPenyewa(kode){
+    if(confirm('Hapus data penyewa ini?')){ 
+        DB.penyewa = DB.penyewa.filter(p => p.kode !== kode); 
+        DB.simpan(); 
+        muatPenyewa(); 
+        pesan('Penyewa dihapus'); 
+    } 
+}
+
+// ============================================================
+// DATA PEKERJAAN
+// ============================================================
+function muatPekerjaan(){
+    document.getElementById('tbodyPekerjaan').innerHTML = DB.pekerjaan.map(pk => {
+        return `<tr><td style="font-family:'Share Tech Mono',monospace;font-size:11px;color:#ff6600;">${pk.kode}</td><td style="font-weight:600;">${pk.nama}</td><td>${pk.penanggungJawab||'-'}</td><td>${formatTanggal(pk.tanggalMulai)}</td><td>${formatTanggal(pk.tanggalTarget)}</td><td style="text-align:center;"><span class="${pk.status==='Berlangsung'?'status-berlangsung':'status-selesai'}">${pk.status.toUpperCase()}</span></td><td style="text-align:center;">${pk.status==='Berlangsung'?`<button class="action-btn success" onclick="selesaiPekerjaan('${pk.kode}')" title="Selesai"><i class="fas fa-check"></i></button>`:''}<button class="action-btn edit" onclick="formPekerjaan('${pk.kode}')"><i class="fas fa-edit"></i></button><button class="action-btn delete" onclick="hapusPekerjaan('${pk.kode}')"><i class="fas fa-trash"></i></button></td></tr>`;
+    }).join('') || `<tr><td colspan="7" style="text-align:center;padding:40px;color:rgba(255,255,255,0.4);">Belum ada data pekerjaan</td></tr>`;
+}
+
+function formPekerjaan(kode){
+    const pk = kode ? DB.pekerjaan.find(x => x.kode === kode) : null;
+    bukaModal(pk ? 'UBAH PEKERJAAN' : 'TAMBAH PEKERJAAN', `
+        <form id="formPekerjaan" style="display:flex;flex-direction:column;gap:15px;">
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff6600;letter-spacing:1px;display:block;margin-bottom:5px;">Nama Pekerjaan</label><input type="text" id="pkjNama" class="cyber-input" value="${pk?.nama||''}" required></div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff6600;letter-spacing:1px;display:block;margin-bottom:5px;">Penanggung Jawab</label><input type="text" id="pkjPJ" class="cyber-input" value="${pk?.penanggungJawab||''}"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+                <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff6600;letter-spacing:1px;display:block;margin-bottom:5px;">Tanggal Mulai</label><input type="date" id="pkjMulai" class="cyber-input" value="${pk?.tanggalMulai||''}"></div>
+                <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff6600;letter-spacing:1px;display:block;margin-bottom:5px;">Target Selesai</label><input type="date" id="pkjTarget" class="cyber-input" value="${pk?.tanggalTarget||''}"></div>
+            </div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff6600;letter-spacing:1px;display:block;margin-bottom:5px;">Status</label><select id="pkjStatus" class="cyber-input"><option ${pk?.status==='Berlangsung'?'selected':''}>Berlangsung</option><option ${pk?.status==='Selesai'?'selected':''}>Selesai</option><option ${pk?.status==='Ditunda'?'selected':''}>Ditunda</option></select></div>
+            <div style="display:flex;gap:10px;"><button type="button" onclick="tutupModal()" class="btn-cyber-secondary" style="flex:1;">BATAL</button><button type="submit" class="btn-cyber-primary" style="flex:1;">SIMPAN</button></div>
+        </form>
+    `);
+    document.getElementById('formPekerjaan').addEventListener('submit', function(e){
+        e.preventDefault();
+        const d = {kode:pk?.kode||DB.buatKode('pekerjaan'), nama:v('pkjNama'), penanggungJawab:v('pkjPJ'), tanggalMulai:document.getElementById('pkjMulai').value, tanggalTarget:document.getElementById('pkjTarget').value, status:document.getElementById('pkjStatus').value};
+        if(pk) Object.assign(pk, d); else DB.pekerjaan.push(d);
+        DB.simpan(); tutupModal(); muatPekerjaan(); muatDashboard();
+        pesan(pk ? 'Diperbarui' : 'Ditambahkan');
+    });
+}
+
+function selesaiPekerjaan(kode){
+    const pk = DB.pekerjaan.find(x => x.kode === kode);
+    if(pk){ pk.status = 'Selesai'; DB.simpan(); muatPekerjaan(); muatDashboard(); pesan('Pekerjaan selesai'); }
+}
+
+function hapusPekerjaan(kode){
+    if(confirm('Hapus data ini?')){ DB.pekerjaan = DB.pekerjaan.filter(pk => pk.kode !== kode); DB.simpan(); muatPekerjaan(); muatDashboard(); pesan('Dihapus'); }
+}
+
+// ============================================================
+// PROMOSI
+// ============================================================
+function muatPromosi(){
+    const hariIni = new Date().toISOString().slice(0,10);
+    document.getElementById('tbodyPromosi').innerHTML = DB.promosi.map(pr => {
+        const berlaku = pr.tanggalMulai <= hariIni && (!pr.tanggalSelesai || pr.tanggalSelesai >= hariIni);
+        pr.status = berlaku ? 'Berlaku' : 'Kadaluwarsa';
+        return `<tr><td style="font-family:'Share Tech Mono',monospace;font-size:11px;color:#ff00aa;">${pr.kode}</td><td style="font-weight:600;">${pr.nama}</td><td>${pr.tipe}</td><td>${pr.tipe.includes('%')?pr.nilai+'%':formatUang(pr.nilai)}</td><td style="font-size:12px;">${formatTanggal(pr.tanggalMulai)} - ${formatTanggal(pr.tanggalSelesai)}</td><td style="text-align:center;"><span class="${berlaku?'status-berlaku':'status-kadaluwarsa'}">${pr.status.toUpperCase()}</span></td><td style="text-align:center;"><button class="action-btn edit" onclick="formPromosi('${pr.kode}')"><i class="fas fa-edit"></i></button><button class="action-btn delete" onclick="hapusPromosi('${pr.kode}')"><i class="fas fa-trash"></i></button></td></tr>`;
+    }).join('') || `<tr><td colspan="7" style="text-align:center;padding:40px;color:rgba(255,255,255,0.4);">Belum ada promosi</td></tr>`;
+}
+
+function formPromosi(kode){
+    const pr = kode ? DB.promosi.find(x => x.kode === kode) : null;
+    bukaModal(pr ? 'UBAH PROMOSI' : 'BUAT PROMOSI', `
+        <form id="formPromosi" style="display:flex;flex-direction:column;gap:15px;">
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff00aa;letter-spacing:1px;display:block;margin-bottom:5px;">Nama Promosi</label><input type="text" id="prmNama" class="cyber-input" value="${pr?.nama||''}" required></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+                <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff00aa;letter-spacing:1px;display:block;margin-bottom:5px;">Tipe</label><select id="prmTipe" class="cyber-input"><option ${pr?.tipe==='Potongan (%)'?'selected':''}>Potongan (%)</option><option ${pr?.tipe==='Potongan Nominal'?'selected':''}>Potongan Nominal</option></select></div>
+                <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff00aa;letter-spacing:1px;display:block;margin-bottom:5px;">Nilai</label><input type="number" id="prmNilai" class="cyber-input" value="${pr?.nilai||''}" required min="0"></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+                <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff00aa;letter-spacing:1px;display:block;margin-bottom:5px;">Mulai Berlaku</label><input type="date" id="prmMulai" class="cyber-input" value="${pr?.tanggalMulai?.slice(0,10)||''}" required></div>
+                <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff00aa;letter-spacing:1px;display:block;margin-bottom:5px;">Selesai Berlaku</label><input type="date" id="prmSelesai" class="cyber-input" value="${pr?.tanggalSelesai?.slice(0,10)||''}"></div>
+            </div>
+            <div style="display:flex;gap:10px;"><button type="button" onclick="tutupModal()" class="btn-cyber-secondary" style="flex:1;">BATAL</button><button type="submit" class="btn-cyber-primary" style="flex:1;">SIMPAN</button></div>
+        </form>
+    `);
+    document.getElementById('formPromosi').addEventListener('submit', function(e){
+        e.preventDefault();
+        const d = {kode:pr?.kode||DB.buatKode('promosi'), nama:v('prmNama'), tipe:document.getElementById('prmTipe').value, nilai:Number(document.getElementById('prmNilai').value), tanggalMulai:document.getElementById('prmMulai').value, tanggalSelesai:document.getElementById('prmSelesai').value||null, status:'Berlaku'};
+        if(pr) Object.assign(pr, d); else DB.promosi.push(d);
+        DB.simpan(); tutupModal(); muatPromosi(); muatDashboard();
+        pesan(pr ? 'Diperbarui' : 'Promosi dibuat');
+    });
+}
+
+function hapusPromosi(kode){
+    if(confirm('Hapus promosi ini?')){ DB.promosi = DB.promosi.filter(pr => pr.kode !== kode); DB.simpan(); muatPromosi(); muatDashboard(); pesan('Promosi dihapus'); }
+}
+
+// ============================================================
+// PENYEWAAN
+// ============================================================
+function muatSewa(){
+    document.getElementById('tbodySewa').innerHTML = DB.sewa.map(s => {
+        const pyw = DB.penyewa.find(p => p.kode === s.kodePenyewa);
+        const kmr = DB.kamar.find(k => k.kode === s.kodeKamar);
+        return `<tr><td style="font-family:'Share Tech Mono',monospace;font-size:11px;color:#00f0ff;">${s.kode}</td><td style="font-weight:600;">${pyw?.nama||'-'}</td><td>${kmr?.nomor||'-'}</td><td style="font-size:12px;">${formatTanggal(s.tanggalMulai)} - ${formatTanggal(s.tanggalSelesai)}</td><td style="text-align:right;font-weight:600;">${formatUang(s.biaya)}</td><td style="text-align:right;">${formatUang(s.jaminan||0)}</td><td style="text-align:center;"><span class="${s.status==='Aktif'?'status-aktif':'status-selesai'}">${s.status.toUpperCase()}</span></td><td style="text-align:center;">${s.status==='Aktif'?`<button class="action-btn success" onclick="akhiriSewa('${s.kode}')" title="Akhiri"><i class="fas fa-stop"></i></button>`:''}<button class="action-btn delete" onclick="hapusSewa('${s.kode}')"><i class="fas fa-trash"></i></button></td></tr>`;
+    }).join('') || `<tr><td colspan="8" style="text-align:center;padding:40px;color:rgba(255,255,255,0.4);">Belum ada data sewa</td></tr>`;
+}
+
+function formSewa(){
+    const tersedia = DB.kamar.filter(k => DB.statusKamar(k.kode) === 'Tersedia');
+    if(tersedia.length === 0){ pesan('Tidak ada kamar tersedia!','error'); return; }
+    if(DB.penyewa.length === 0){ pesan('Tambah data penyewa terlebih dahulu!','error'); return; }
+    bukaModal('BUAT KONTRAK SEWA', `
+        <form id="formSewa" style="display:flex;flex-direction:column;gap:15px;">
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00f0ff;letter-spacing:1px;display:block;margin-bottom:5px;">Penyewa</label><select id="swaPenyewa" class="cyber-input" required>${DB.penyewa.map(p=>`<option value="${p.kode}">${p.nama}</option>`).join('')}</select></div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00f0ff;letter-spacing:1px;display:block;margin-bottom:5px;">Kamar</label><select id="swaKamar" class="cyber-input" required>${tersedia.map(k=>`<option value="${k.kode}" data-harga="${k.harga}">${k.nomor} - ${k.tipe} (${formatUang(k.harga)})</option>`).join('')}</select></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+                <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00f0ff;letter-spacing:1px;display:block;margin-bottom:5px;">Tanggal Mulai</label><input type="date" id="swaMulai" class="cyber-input" required></div>
+                <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00f0ff;letter-spacing:1px;display:block;margin-bottom:5px;">Tanggal Selesai</label><input type="date" id="swaSelesai" class="cyber-input"></div>
+            </div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00f0ff;letter-spacing:1px;display:block;margin-bottom:5px;">Biaya Sewa/Bulan</label><input type="number" id="swaBiaya" class="cyber-input" required min="0"></div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00f0ff;letter-spacing:1px;display:block;margin-bottom:5px;">Uang Jaminan</label><input type="number" id="swaJaminan" class="cyber-input" value="0" min="0"></div>
+            <div style="display:flex;gap:10px;"><button type="button" onclick="tutupModal()" class="btn-cyber-secondary" style="flex:1;">BATAL</button><button type="submit" class="btn-cyber-primary" style="flex:1;">BUAT SEWA</button></div>
+        </form>
+    `);
+    document.getElementById('swaKamar').addEventListener('change', function(){
+        const o = this.options[this.selectedIndex];
+        if(o && o.dataset.harga) document.getElementById('swaBiaya').value = o.dataset.harga;
+    });
+    document.getElementById('swaKamar').dispatchEvent(new Event('change'));
+    document.getElementById('formSewa').addEventListener('submit', function(e){
+        e.preventDefault();
+        const kodeSewa = DB.buatKode('sewa');
+        const kodeKamar = document.getElementById('swaKamar').value;
+        const kodePenyewa = document.getElementById('swaPenyewa').value;
+        const pyw = DB.penyewa.find(p => p.kode === kodePenyewa);
+        const kmr = DB.kamar.find(k => k.kode === kodeKamar);
+        const jmlJaminan = Number(document.getElementById('swaJaminan').value) || 0;
+        DB.sewa.push({kode:kodeSewa, kodeKamar:kodeKamar, kodePenyewa:kodePenyewa, tanggalMulai:document.getElementById('swaMulai').value, tanggalSelesai:document.getElementById('swaSelesai').value||null, biaya:Number(document.getElementById('swaBiaya').value), jaminan:jmlJaminan, status:'Aktif'});
+        if(jmlJaminan > 0){
+            DB.jaminan.push({kode:DB.buatKode('jaminan'), kodeSewa:kodeSewa, namaPenyewa:pyw?.nama||'-', kamar:kmr?.nomor||'-', jumlah:jmlJaminan, tanggal:document.getElementById('swaMulai').value, status:'Ditahan', keterangan:''});
+        }
+        DB.simpan(); tutupModal(); muatSewa(); muatDashboard();
+        pesan('Kontrak sewa berhasil dibuat' + (jmlJaminan>0?' + jaminan tercatat':''));
+    });
+}
+
+function akhiriSewa(kode){
+    if(confirm('Akhiri masa sewa ini?')){
+        const s = DB.sewa.find(x => x.kode === kode);
+        if(s){ s.status = 'Selesai'; DB.simpan(); muatSewa(); muatDashboard(); pesan('Sewa diakhiri'); }
+    }
+}
+
+function hapusSewa(kode){
+    if(confirm('Hapus kontrak sewa ini?')){ DB.sewa = DB.sewa.filter(s => s.kode !== kode); DB.simpan(); muatSewa(); muatDashboard(); pesan('Kontrak dihapus'); }
+}
+
+// ============================================================
+// PEMBAYARAN
+// ============================================================
+function muatPembayaran(){
+    document.getElementById('tbodyBayar').innerHTML = DB.pembayaran.map(b => {
+        const s = DB.sewa.find(x => x.kode === b.kodeSewa);
+        const pyw = s ? DB.penyewa.find(p => p.kode === s.kodePenyewa) : null;
+        return `<tr><td style="font-family:'Share Tech Mono',monospace;font-size:11px;color:#00ff88;">${b.kode}</td><td style="font-weight:600;">${pyw?.nama||'-'}</td><td>${b.periode||'-'}</td><td>${b.jenis}</td><td style="text-align:right;">${formatUang(b.tagihan)}</td><td style="text-align:right;font-weight:600;color:#00ff88;">${formatUang(b.jumlah)}</td><td>${b.metode}</td><td style="text-align:center;"><span class="status-lunas">${b.status.toUpperCase()}</span></td><td style="text-align:center;"><button class="action-btn delete" onclick="hapusPembayaran('${b.kode}')"><i class="fas fa-trash"></i></button></td></tr>`;
+    }).join('') || `<tr><td colspan="9" style="text-align:center;padding:40px;color:rgba(255,255,255,0.4);">Belum ada pembayaran</td></tr>`;
+}
+
+function formPembayaran(){
+    const sewaAktif = DB.sewa.filter(s => s.status === 'Aktif');
+    if(sewaAktif.length === 0){ pesan('Tidak ada sewa aktif!','error'); return; }
+    bukaModal('CATAT PEMBAYARAN', `
+        <form id="formBayar" style="display:flex;flex-direction:column;gap:15px;">
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00ff88;letter-spacing:1px;display:block;margin-bottom:5px;">Kontrak Sewa</label><select id="byrSewa" class="cyber-input" required>${sewaAktif.map(s=>{const pyw=DB.penyewa.find(p=>p.kode===s.kodePenyewa);const kmr=DB.kamar.find(k=>k.kode===s.kodeKamar);return `<option value="${s.kode}" data-biaya="${s.biaya}">${pyw?.nama} - ${kmr?.nomor} (${formatUang(s.biaya)})</option>`}).join('')}</select></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+                <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00ff88;letter-spacing:1px;display:block;margin-bottom:5px;">Periode</label><input type="month" id="byrPeriode" class="cyber-input" required></div>
+                <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00ff88;letter-spacing:1px;display:block;margin-bottom:5px;">Metode</label><select id="byrMetode" class="cyber-input"><option>Tunai</option><option>Transfer BCA</option><option>Transfer BRI</option><option>Transfer Mandiri</option><option>QRIS</option><option>E-Wallet</option></select></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+                <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00ff88;letter-spacing:1px;display:block;margin-bottom:5px;">Tagihan</label><input type="number" id="byrTagihan" class="cyber-input" required min="0"></div>
+                <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00ff88;letter-spacing:1px;display:block;margin-bottom:5px;">Diskon</label><input type="number" id="byrDiskon" class="cyber-input" value="0" min="0"></div>
+            </div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00ff88;letter-spacing:1px;display:block;margin-bottom:5px;">Jumlah Dibayar</label><input type="number" id="byrJumlah" class="cyber-input" required min="0"></div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#00ff88;letter-spacing:1px;display:block;margin-bottom:5px;">Referensi</label><input type="text" id="byrRef" class="cyber-input" placeholder="No. bukti transfer dll"></div>
+            <div style="display:flex;gap:10px;"><button type="button" onclick="tutupModal()" class="btn-cyber-secondary" style="flex:1;">BATAL</button><button type="submit" class="btn-cyber-primary" style="flex:1;">SIMPAN</button></div>
+        </form>
+    `);
+    document.getElementById('byrSewa').addEventListener('change', function(){
+        const o = this.options[this.selectedIndex];
+        if(o && o.dataset.biaya){
+            document.getElementById('byrTagihan').value = o.dataset.biaya;
+            document.getElementById('byrJumlah').value = o.dataset.biaya;
+        }
+    });
+    document.getElementById('byrSewa').dispatchEvent(new Event('change'));
+    document.getElementById('formBayar').addEventListener('submit', function(e){
+        e.preventDefault();
+        DB.pembayaran.push({kode:DB.buatKode('bayar'), kodeSewa:v('byrSewa'), jenis:'sewa', periode:document.getElementById('byrPeriode').value, tagihan:Number(document.getElementById('byrTagihan').value), diskon:Number(document.getElementById('byrDiskon').value), jumlah:Number(document.getElementById('byrJumlah').value), metode:document.getElementById('byrMetode').value, referensi:v('byrRef'), status:'Lunas'});
+        DB.simpan(); tutupModal(); muatPembayaran(); muatDashboard();
+        pesan('Pembayaran tercatat');
+    });
+}
+
+function hapusPembayaran(kode){
+    if(confirm('Hapus catatan pembayaran ini?')){ DB.pembayaran = DB.pembayaran.filter(b => b.kode !== kode); DB.simpan(); muatPembayaran(); muatDashboard(); pesan('Dihapus'); }
+}
+
+// ============================================================
+// JAMINAN
+// ============================================================
+function muatJaminan(){
+    const total = DB.jaminan.reduce((s,j)=>s+j.jumlah,0);
+    const ditahan = DB.jaminan.filter(j=>j.status==='Ditahan').reduce((s,j)=>s+j.jumlah,0);
+    const kembali = DB.jaminan.filter(j=>j.status==='Dikembalikan').reduce((s,j)=>s+j.jumlah,0);
+    const dipotong = DB.jaminan.filter(j=>j.status==='Dipotong').reduce((s,j)=>s+j.jumlah,0);
+    document.getElementById('dJaminanTotal').textContent = formatUang(total);
+    document.getElementById('dJaminanDitahan').textContent = formatUang(ditahan);
+    document.getElementById('dJaminanKembali').textContent = formatUang(kembali);
+    document.getElementById('dJaminanPotong').textContent = formatUang(dipotong);
+    
+    document.getElementById('tbodyJaminan').innerHTML = DB.jaminan.map(j => {
+        return `<tr><td style="font-family:'Share Tech Mono',monospace;font-size:11px;color:#bf00ff;">${j.kode}</td><td style="font-weight:600;">${j.namaPenyewa}</td><td>${j.kamar}</td><td style="text-align:right;font-weight:600;">${formatUang(j.jumlah)}</td><td>${formatTanggal(j.tanggal)}</td><td style="text-align:center;"><span class="status-${j.status.toLowerCase()}">${j.status.toUpperCase()}</span></td><td style="font-size:12px;color:rgba(255,255,255,0.6);">${j.keterangan||'-'}</td><td style="text-align:center;">${j.status==='Ditahan'?`<button class="action-btn success" onclick="kembalikanJaminan('${j.kode}')" title="Kembalikan"><i class="fas fa-hand-holding-usd"></i></button><button class="action-btn delete" onclick="potongJaminan('${j.kode}')" title="Potong"><i class="fas fa-cut"></i></button>`:''}</td></tr>`;
+    }).join('') || `<tr><td colspan="8" style="text-align:center;padding:40px;color:rgba(255,255,255,0.4);">Belum ada data jaminan</td></tr>`;
+}
+
+function kembalikanJaminan(kode){
+    const j = DB.jaminan.find(x => x.kode === kode);
+    if(j && confirm('Kembalikan jaminan ' + formatUang(j.jumlah) + '?')){
+        j.status = 'Dikembalikan';
+        j.keterangan = 'Dikembalikan penuh';
+        DB.simpan(); muatJaminan(); pesan('Jaminan dikembalikan');
+    }
+}
+
+function potongJaminan(kode){
+    const j = DB.jaminan.find(x => x.kode === kode);
+    if(j){
+        const ket = prompt('Alasan pemotongan jaminan ' + formatUang(j.jumlah) + ':');
+        if(ket !== null){
+            j.status = 'Dipotong';
+            j.keterangan = ket || 'Dipotong';
+            DB.simpan(); muatJaminan(); pesan('Jaminan dipotong');
+        }
+    }
+}
+
+// ============================================================
+// KALKULATOR PPH 21
+// ============================================================
+function muatPPH(){
+    // Form sudah ada di HTML, cukup pastikan event terpasang
+}
+
+function hitungPPH(){
+    const bruto = Number(document.getElementById('pphBruto').value) || 0;
+    const ptkpVal = {
+        'TK/0':54000000,'TK/1':58500000,'TK/2':63000000,'TK/3':67500000,
+        'K/0':58500000,'K/1':63000000,'K/2':67500000,'K/3':72000000
+    }[document.getElementById('pphPTKP').value];
+    const biayaJabatanPct = Number(document.getElementById('pphBiayaJabatan').value) || 0;
+    const pensiun = Number(document.getElementById('pphPensiun').value) || 0;
+    const bpjs = Number(document.getElementById('pphBPJS').value) || 0;
+    const periode = document.getElementById('pphPeriode').value;
+    
+    const brutoTahunan = periode === 'bulanan' ? bruto * 12 : bruto;
+    const pensiunTahunan = periode === 'bulanan' ? pensiun * 12 : pensiun;
+    const bpjsTahunan = periode === 'bulanan' ? bpjs * 12 : bpjs;
+    
+    const biayaJabatan = Math.min(brutoTahunan * biayaJabatanPct / 100, 6000000);
+    const nettoTahunan = brutoTahunan - biayaJabatan - pensiunTahunan - bpjsTahunan;
+    const pkp = Math.max(0, nettoTahunan - ptkpVal);
+    
+    let pph21 = 0;
+    const lapisan = [
+        {batas:60000000, tarif:0.05},
+        {batas:190000000, tarif:0.15},
+        {batas:250000000, tarif:0.25},
+        {batas:4500000000, tarif:0.30},
+        {batas:Infinity, tarif:0.35}
+    ];
+    let sisa = pkp;
+    for(const l of lapisan){
+        if(sisa <= 0) break;
+        const kena = Math.min(sisa, l.batas);
+        pph21 += kena * l.tarif;
+        sisa -= l.batas;
+    }
+    
+    const pphBulanan = pph21 / 12;
+    
+    document.getElementById('hasilPPH').innerHTML = `
+        <div style="display:flex;flex-direction:column;gap:10px;font-family:'Rajdhani',sans-serif;font-size:13px;">
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.1);"><span style="color:rgba(255,255,255,0.6);">Penghasilan Bruto/Tahun</span><span style="font-weight:600;">${formatUang(brutoTahunan)}</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.1);"><span style="color:rgba(255,255,255,0.6);">Biaya Jabatan (${biayaJabatanPct}%)</span><span style="color:#ff0050;">- ${formatUang(biayaJabatan)}</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.1);"><span style="color:rgba(255,255,255,0.6);">Iuran Pensiun</span><span style="color:#ff0050;">- ${formatUang(pensiunTahunan)}</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.1);"><span style="color:rgba(255,255,255,0.6);">BPJS</span><span style="color:#ff0050;">- ${formatUang(bpjsTahunan)}</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.1);"><span style="color:rgba(255,255,255,0.6);">Penghasilan Neto</span><span style="font-weight:600;">${formatUang(nettoTahunan)}</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.1);"><span style="color:rgba(255,255,255,0.6);">PTKP</span><span style="color:#ff0050;">- ${formatUang(ptkpVal)}</span></div>
+            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:2px solid rgba(0,240,255,0.3);"><span style="color:#00f0ff;font-weight:600;">PKP</span><span style="color:#00f0ff;font-weight:700;">${formatUang(pkp)}</span></div>
+            <div style="display:flex;justify-content:space-between;padding:12px;background:rgba(255,150,0,0.1);border-radius:8px;margin-top:5px;"><span style="color:#ff9600;font-weight:600;font-size:14px;">PPh 21 / Bulan</span><span style="color:#ff9600;font-weight:800;font-size:16px;">${formatUang(pphBulanan)}</span></div>
+            <div style="display:flex;justify-content:space-between;padding:12px;background:rgba(0,255,136,0.1);border-radius:8px;"><span style="color:#00ff88;font-weight:600;font-size:14px;">PPh 21 / Tahun</span><span style="color:#00ff88;font-weight:800;font-size:16px;">${formatUang(pph21)}</span></div>
+        </div>
+    `;
+}
+
+function resetPPH(){
+    document.getElementById('pphBruto').value = 0;
+    document.getElementById('pphBiayaJabatan').value = 5;
+    document.getElementById('pphPensiun').value = 0;
+    document.getElementById('pphBPJS').value = 0;
+    document.getElementById('hasilPPH').innerHTML = '<i class="fas fa-calculator" style="font-size:48px;opacity:0.3;display:block;margin-bottom:15px;"></i>Masukkan data dan klik HITUNG';
+}
+
+// ============================================================
+// PENGELUARAN
+// ============================================================
+function muatPengeluaran(){
+    document.getElementById('tbodyPengeluaran').innerHTML = DB.pengeluaran.map((b,i) => {
+        return `<tr><td>${i+1}</td><td>${formatTanggal(b.tanggal)}</td><td style="font-weight:600;">${b.jenis}</td><td style="font-size:12px;color:rgba(255,255,255,0.6);">${b.keterangan||'-'}</td><td style="text-align:right;font-weight:600;color:#ff0050;">${formatUang(b.jumlah)}</td><td style="text-align:center;"><button class="action-btn edit" onclick="formPengeluaran(${i})"><i class="fas fa-edit"></i></button><button class="action-btn delete" onclick="hapusPengeluaran(${i})"><i class="fas fa-trash"></i></button></td></tr>`;
+    }).join('') || `<tr><td colspan="6" style="text-align:center;padding:40px;color:rgba(255,255,255,0.4);">Belum ada pengeluaran</td></tr>`;
+}
+
+function formPengeluaran(idx){
+    const b = idx !== undefined ? DB.pengeluaran[idx] : null;
+    bukaModal(b ? 'UBAH PENGELUARAN' : 'CATAT PENGELUARAN', `
+        <form id="formPengeluaran" style="display:flex;flex-direction:column;gap:15px;">
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff0050;letter-spacing:1px;display:block;margin-bottom:5px;">Tanggal</label><input type="date" id="pngTgl" class="cyber-input" value="${b?.tanggal?.slice(0,10)||new Date().toISOString().slice(0,10)}" required></div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff0050;letter-spacing:1px;display:block;margin-bottom:5px;">Jenis Biaya</label><input type="text" id="pngJenis" class="cyber-input" value="${b?.jenis||''}" placeholder="Listrik, Air, Internet, dll" required></div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff0050;letter-spacing:1px;display:block;margin-bottom:5px;">Jumlah (Rp)</label><input type="number" id="pngJumlah" class="cyber-input" value="${b?.jumlah||''}" required min="0"></div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#ff0050;letter-spacing:1px;display:block;margin-bottom:5px;">Keterangan</label><textarea id="pngKet" class="cyber-input" rows="2">${b?.keterangan||''}</textarea></div>
+            <div style="display:flex;gap:10px;"><button type="button" onclick="tutupModal()" class="btn-cyber-secondary" style="flex:1;">BATAL</button><button type="submit" class="btn-cyber-primary" style="flex:1;">SIMPAN</button></div>
+        </form>
+    `);
+    document.getElementById('formPengeluaran').addEventListener('submit', function(e){
+        e.preventDefault();
+        const d = {tanggal:document.getElementById('pngTgl').value, jenis:v('pngJenis'), jumlah:Number(document.getElementById('pngJumlah').value), keterangan:v('pngKet')};
+        if(b !== undefined){ DB.pengeluaran[idx] = d; } else { DB.pengeluaran.push(d); }
+        DB.simpan(); tutupModal(); muatPengeluaran(); muatDashboard();
+        pesan(b !== undefined ? 'Diperbarui' : 'Pengeluaran dicatat');
+    });
+}
+
+function hapusPengeluaran(idx){
+    if(confirm('Hapus pengeluaran ini?')){ DB.pengeluaran.splice(idx,1); DB.simpan(); muatPengeluaran(); muatDashboard(); pesan('Dihapus'); }
+}
+
+// ============================================================
+// LAPORAN
+// ============================================================
+function muatFilterLaporan(){
+    const bulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+    const selBulan = document.getElementById('filterBulan');
+    if(selBulan){
+        selBulan.innerHTML = bulan.map((b,i)=>`<option value="${String(i+1).padStart(2,'0')}" ${i===new Date().getMonth()?'selected':''}>${b}</option>`).join('');
+    }
+    const selTahun = document.getElementById('filterTahun');
+    if(selTahun){
+        const thn = new Date().getFullYear();
+        selTahun.innerHTML = [thn-1, thn, thn+1].map(t=>`<option ${t===thn?'selected':''}>${t}</option>`).join('');
+    }
+}
+
+function tampilkanLaporan(){
+    const bulan = document.getElementById('filterBulan').value;
+    const tahun = document.getElementById('filterTahun').value;
+    const periode = tahun + '-' + bulan;
+    
+    const bayarFilter = DB.pembayaran.filter(b => b.periode === periode && b.status === 'Lunas');
+    const pendapatan = bayarFilter.reduce((s,b)=>s+b.jumlah,0);
+    
+    const pengFilter = DB.pengeluaran.filter(b => b.tanggal && b.tanggal.startsWith(periode));
+    const pengeluaran = pengFilter.reduce((s,b)=>s+b.jumlah,0);
+    const laba = pendapatan - pengeluaran;
+    
+    const namaBulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'][parseInt(bulan)-1];
+    document.getElementById('periodeLaporan').textContent = `Periode ${namaBulan} ${tahun}`;
+    
+    let html = '';
+    html += `<div style="margin-bottom:25px;"><h4 style="font-family:'Orbitron',sans-serif;color:#00ff88;font-size:14px;margin:0 0 15px 0;"><i class="fas fa-arrow-down mr-2"></i>PENDAPATAN</h4>`;
+    if(bayarFilter.length){
+        html += `<table class="data-table" style="width:100%;border-collapse:collapse;margin-bottom:15px;"><thead><tr style="border-bottom:1px solid rgba(0,255,136,0.3);"><th style="padding:10px;font-size:10px;">Tanggal</th><th style="padding:10px;font-size:10px;">Penyewa</th><th style="padding:10px;font-size:10px;">Metode</th><th style="padding:10px;font-size:10px;text-align:right;">Jumlah</th></tr></thead><tbody>`;
+        bayarFilter.forEach(b => {
+            const s = DB.sewa.find(x=>x.kode===b.kodeSewa);
+            const pyw = s ? DB.penyewa.find(p=>p.kode===s.kodePenyewa) : null;
+            html += `<tr><td style="padding:10px;font-size:12px;">${b.periode}</td><td style="padding:10px;font-size:12px;">${pyw?.nama||'-'}</td><td style="padding:10px;font-size:12px;">${b.metode}</td><td style="padding:10px;font-size:12px;text-align:right;color:#00ff88;font-weight:600;">${formatUang(b.jumlah)}</td></tr>`;
+        });
+        html += `</tbody></table>`;
+    } else { html += `<p style="color:rgba(255,255,255,0.4);font-family:'Rajdhani',sans-serif;padding:20px;text-align:center;">Tidak ada pendapatan pada periode ini</p>`; }
+    html += `<div style="display:flex;justify-content:space-between;padding:12px 15px;background:rgba(0,255,136,0.1);border-radius:8px;font-family:'Orbitron',sans-serif;"><span style="color:#00ff88;font-size:12px;">TOTAL PENDAPATAN</span><span style="color:#00ff88;font-weight:700;">${formatUang(pendapatan)}</span></div></div>`;
+    
+    html += `<div style="margin-bottom:25px;"><h4 style="font-family:'Orbitron',sans-serif;color:#ff0050;font-size:14px;margin:0 0 15px 0;"><i class="fas fa-arrow-up mr-2"></i>PENGELUARAN</h4>`;
+    if(pengFilter.length){
+        html += `<table class="data-table" style="width:100%;border-collapse:collapse;margin-bottom:15px;"><thead><tr style="border-bottom:1px solid rgba(255,0,80,0.3);"><th style="padding:10px;font-size:10px;">Tanggal</th><th style="padding:10px;font-size:10px;">Jenis</th><th style="padding:10px;font-size:10px;">Keterangan</th><th style="padding:10px;font-size:10px;text-align:right;">Jumlah</th></tr></thead><tbody>`;
+        pengFilter.forEach(b => {
+            html += `<tr><td style="padding:10px;font-size:12px;">${formatTanggal(b.tanggal)}</td><td style="padding:10px;font-size:12px;">${b.jenis}</td><td style="padding:10px;font-size:12px;">${b.keterangan||'-'}</td><td style="padding:10px;font-size:12px;text-align:right;color:#ff0050;font-weight:600;">${formatUang(b.jumlah)}</td></tr>`;
+        });
+        html += `</tbody></table>`;
+    } else { html += `<p style="color:rgba(255,255,255,0.4);font-family:'Rajdhani',sans-serif;padding:20px;text-align:center;">Tidak ada pengeluaran pada periode ini</p>`; }
+    html += `<div style="display:flex;justify-content:space-between;padding:12px 15px;background:rgba(255,0,80,0.1);border-radius:8px;font-family:'Orbitron',sans-serif;"><span style="color:#ff0050;font-size:12px;">TOTAL PENGELUARAN</span><span style="color:#ff0050;font-weight:700;">${formatUang(pengeluaran)}</span></div></div>`;
+    
+    html += `<div style="display:flex;justify-content:space-between;padding:20px;background:linear-gradient(135deg,${laba>=0?'rgba(0,240,255,0.15)':'rgba(255,0,80,0.15)'},rgba(0,0,0,0.05));border:2px solid ${laba>=0?'#00f0ff':'#ff0050'};border-radius:12px;font-family:'Orbitron',sans-serif;"><span style="color:${laba>=0?'#00f0ff':'#ff0050'};font-size:16px;font-weight:700;"><i class="fas fa-chart-line mr-2"></i>${laba>=0?'LABA BERSIH':'RUGI'}</span><span style="color:${laba>=0?'#00f0ff':'#ff0050'};font-size:22px;font-weight:800;">${formatUang(Math.abs(laba))}</span></div>`;
+    
+    document.getElementById('isiLaporan').innerHTML = html;
+    document.getElementById('areaLaporan').classList.remove('hidden');
+}
+
+// ============================================================
+// PENGGUNA
+// ============================================================
+function muatPengguna(){
+    document.getElementById('tbodyPengguna').innerHTML = DB.pengguna.map(u => {
+        return `<tr><td style="font-family:'Share Tech Mono',monospace;font-size:12px;color:#bf00ff;">${u.username}</td><td style="font-weight:600;">${u.namaLengkap}</td><td><span class="status-berlangsung">${u.hakAkses.toUpperCase()}</span></td><td style="text-align:center;"><button class="action-btn edit" onclick="formPengguna('${u.username}')"><i class="fas fa-edit"></i></button>${u.username!==DB.aktif?`<button class="action-btn delete" onclick="hapusPengguna('${u.username}')"><i class="fas fa-trash"></i></button>`:''}</td></tr>`;
+    }).join('');
+}
+
+function formPengguna(username){
+    const u = username ? DB.pengguna.find(x => x.username === username) : null;
+    bukaModal(u ? 'UBAH PENGGUNA' : 'TAMBAH PENGGUNA', `
+        <form id="formPengguna" style="display:flex;flex-direction:column;gap:15px;">
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#bf00ff;letter-spacing:1px;display:block;margin-bottom:5px;">Username</label><input type="text" id="pgUser" class="cyber-input" value="${u?.username||''}" ${u?'readonly style="opacity:0.6;"':''} required></div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#bf00ff;letter-spacing:1px;display:block;margin-bottom:5px;">Nama Lengkap</label><input type="text" id="pgNama" class="cyber-input" value="${u?.namaLengkap||''}" required></div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#bf00ff;letter-spacing:1px;display:block;margin-bottom:5px;">Password</label><input type="password" id="pgSandi" class="cyber-input" placeholder="${u?'Kosongkan jika tidak diubah':''}" ${u?'':'required'}></div>
+            <div><label style="font-family:'Orbitron',sans-serif;font-size:10px;color:#bf00ff;letter-spacing:1px;display:block;margin-bottom:5px;">Hak Akses</label><select id="pgAkses" class="cyber-input"><option ${u?.hakAkses==='Administrator'?'selected':''}>Administrator</option><option ${u?.hakAkses==='Operator'?'selected':''}>Operator</option><option ${u?.hakAkses==='Viewer'?'selected':''}>Viewer</option></select></div>
+            <div style="display:flex;gap:10px;"><button type="button" onclick="tutupModal()" class="btn-cyber-secondary" style="flex:1;">BATAL</button><button type="submit" class="btn-cyber-primary" style="flex:1;">SIMPAN</button></div>
+        </form>
+    `);
+    document.getElementById('formPengguna').addEventListener('submit', function(e){
+        e.preventDefault();
+        const sandi = v('pgSandi');
+        if(u){
+            u.namaLengkap = v('pgNama');
+            u.hakAkses = document.getElementById('pgAkses').value;
+            if(sandi) u.password = sandi;
+        } else {
+            if(DB.pengguna.some(x=>x.username===v('pgUser'))){ pesan('Username sudah ada!','error'); return; }
+            DB.pengguna.push({username:v('pgUser'), namaLengkap:v('pgNama'), password:sandi, hakAkses:document.getElementById('pgAkses').value});
+        }
+        DB.simpan(); tutupModal(); muatPengguna(); pesan(u?'Diperbarui':'Pengguna ditambahkan');
+    });
+}
+
+function hapusPengguna(username){
+    if(confirm('Hapus pengguna ini?')){ DB.pengguna = DB.pengguna.filter(u => u.username !== username); DB.simpan(); muatPengguna(); pesan('Pengguna dihapus'); }
+}
+
+// ============================================================
+// PROFIL / PENGATURAN
+// ============================================================
+function muatProfil(){
+    const u = DB.pengguna.find(x => x.username === DB.aktif);
+    if(u){
+        document.getElementById('pUsername').value = u.username;
+        document.getElementById('pNama').value = u.namaLengkap;
+    }
+}
+
+document.getElementById('formProfil').addEventListener('submit', function(e){
+    e.preventDefault();
+    const u = DB.pengguna.find(x => x.username === DB.aktif);
+    if(!u) return;
+    const sandiLama = v('pSandiLama');
+    const sandiBaru = v('pSandiBaru');
+    const sandiKonfirm = v('pSandiKonfirm');
+    
+    u.namaLengkap = v('pNama');
+    
+    if(sandiBaru){
+        if(sandiLama !== u.password){ pesan('Sandi lama salah!','error'); return; }
+        if(sandiBaru !== sandiKonfirm){ pesan('Konfirmasi sandi tidak cocok!','error'); return; }
+        u.password = sandiBaru;
+    }
+    
+    DB.simpan();
+    document.getElementById('infoPengguna').textContent = u.namaLengkap;
+    pesan('Profil diperbarui');
+    document.getElementById('pSandiLama').value = '';
+    document.getElementById('pSandiBaru').value = '';
+    document.getElementById('pSandiKonfirm').value = '';
+});
+
+// ============================================================
+// EKSPOR EXCEL & PDF
+// ============================================================
+function eksporExcel(jenis){
+    let data = [], namaFile = 'laporan', sheetName = 'Data';
+    
+    if(jenis === 'penyewaAktif'){
+        const sewaAktif = DB.sewa.filter(s => s.status === 'Aktif');
+        data = sewaAktif.map(s => {
+            const pyw = DB.penyewa.find(p => p.kode === s.kodePenyewa);
+            const kmr = DB.kamar.find(k => k.kode === s.kodeKamar);
+            return {Kode:pyw?.kode||'-', Nama:pyw?.nama||'-', Kamar:kmr?.nomor||'-', Telepon:pyw?.telepon||'-', Periode:formatTanggal(s.tanggalMulai)+' - '+formatTanggal(s.tanggalSelesai), Biaya:s.biaya, Status:s.status};
+        });
+        namaFile = 'penyewa-aktif';
+    } else if(jenis === 'kamar'){
+        data = DB.kamar.map(k => ({Kode:k.kode, Nomor:k.nomor, Tipe:k.tipe, Fasilitas:k.fasilitas, Harga:k.harga, Status:DB.statusKamar(k.kode)}));
+        namaFile = 'data-kamar';
+    } else if(jenis === 'penyewa'){
+        data = DB.penyewa.map(p => ({Kode:p.kode, Nama:p.nama, Identitas:p.identitas, Telepon:p.telepon, Alamat:p.alamat}));
+        namaFile = 'data-penyewa';
+    } else if(jenis === 'sewa'){
+        data = DB.sewa.map(s => {
+            const pyw = DB.penyewa.find(p => p.kode === s.kodePenyewa);
+            const kmr = DB.kamar.find(k => k.kode === s.kodeKamar);
+            return {Kode:s.kode, Penyewa:pyw?.nama||'-', Kamar:kmr?.nomor||'-', Mulai:s.tanggalMulai, Selesai:s.tanggalSelesai||'-', Biaya:s.biaya, Jaminan:s.jaminan, Status:s.status};
+        });
+        namaFile = 'data-sewa';
+    } else if(jenis === 'pembayaran'){
+        data = DB.pembayaran.map(b => {
+            const s = DB.sewa.find(x => x.kode === b.kodeSewa);
+            const pyw = s ? DB.penyewa.find(p => p.kode === s.kodePenyewa) : null;
+            return {Kode:b.kode, Penyewa:pyw?.nama||'-', Periode:b.periode, Jenis:b.jenis, Tagihan:b.tagihan, Diskon:b.diskon, Jumlah:b.jumlah, Metode:b.metode, Status:b.status};
+        });
+        namaFile = 'data-pembayaran';
+    } else if(jenis === 'jaminan'){
+        data = DB.jaminan.map(j => ({Kode:j.kode, Penyewa:j.namaPenyewa, Kamar:j.kamar, Jumlah:j.jumlah, Tanggal:j.tanggal, Status:j.status, Keterangan:j.keterangan}));
+        namaFile = 'data-jaminan';
+    } else if(jenis === 'pengeluaran'){
+        data = DB.pengeluaran.map(b => ({Tanggal:b.tanggal, Jenis:b.jenis, Jumlah:b.jumlah, Keterangan:b.keterangan}));
+        namaFile = 'data-pengeluaran';
+    }
+    
+    if(data.length === 0){ pesan('Tidak ada data untuk diekspor','error'); return; }
+    
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, sheetName);
+    XLSX.writeFile(wb, namaFile + '.xlsx');
+    pesan('Excel berhasil diekspor');
+}
+
+function eksporPDF(jenis){
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(16);
+    doc.setTextColor(0,240,255);
+    doc.text('SPECIAL-ID NEXUS', 105, 15, {align:'center'});
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text('Sistem Manajemen Kos', 105, 22, {align:'center'});
+    
+    let judul = 'Laporan', data = [], kolom = [];
+    
+    if(jenis === 'penyewaAktif'){
+        judul = 'Penyewa Aktif';
+        const sewaAktif = DB.sewa.filter(s => s.status === 'Aktif');
+        kolom = ['Kode','Nama','Kamar','Telepon','Biaya'];
+        data = sewaAktif.map(s => {
+            const pyw = DB.penyewa.find(p => p.kode === s.kodePenyewa);
+            const kmr = DB.kamar.find(k => k.kode === s.kodeKamar);
+            return [pyw?.kode||'-', pyw?.nama||'-', kmr?.nomor||'-', pyw?.telepon||'-', formatUang(s.biaya)];
+        });
+    } else if(jenis === 'kamar'){
+        judul = 'Data Kamar';
+        kolom = ['Kode','Nomor','Tipe','Harga','Status'];
+        data = DB.kamar.map(k => [k.kode, k.nomor, k.tipe, formatUang(k.harga), DB.statusKamar(k.kode)]);
+    } else if(jenis === 'penyewa'){
+        judul = 'Data Penyewa';
+        kolom = ['Kode','Nama','Identitas','Telepon','Alamat'];
+        data = DB.penyewa.map(p => [p.kode, p.nama, p.identitas||'-', p.telepon||'-', p.alamat||'-']);
+    } else if(jenis === 'sewa'){
+        judul = 'Data Penyewaan';
+        kolom = ['Kode','Penyewa','Kamar','Periode','Biaya','Status'];
+        data = DB.sewa.map(s => {
+            const pyw = DB.penyewa.find(p => p.kode === s.kodePenyewa);
+            const kmr = DB.kamar.find(k => k.kode === s.kodeKamar);
+            return [s.kode, pyw?.nama||'-', kmr?.nomor||'-', formatTanggal(s.tanggalMulai), formatUang(s.biaya), s.status];
+        });
+    }
+    
+    doc.setFontSize(12);
+    doc.setTextColor(50);
+    doc.text(judul, 14, 32);
+    
+    if(data.length === 0){ pesan('Tidak ada data','error'); return; }
+    
+    doc.autoTable({
+        head: [kolom],
+        body: data,
+        startY: 38,
+        styles: {fontSize: 8, cellPadding: 3},
+        headStyles: {fillColor: [0,240,255], textColor: 10, fontStyle: 'bold'},
+        alternateRowStyles: {fillColor: [245,245,250]}
+    });
+    
+    doc.save(judul.toLowerCase().replace(/\s+/g,'-') + '.pdf');
+    pesan('PDF berhasil diekspor');
+}
+
+function eksporExcelLaporan(){
+    const bulan = document.getElementById('filterBulan').value;
+    const tahun = document.getElementById('filterTahun').value;
+    const periode = tahun + '-' + bulan;
+    const bayarFilter = DB.pembayaran.filter(b => b.periode === periode && b.status === 'Lunas');
+    const pengFilter = DB.pengeluaran.filter(b => b.tanggal && b.tanggal.startsWith(periode));
+    
+    const wb = XLSX.utils.book_new();
+    const ws1 = XLSX.utils.json_to_sheet(bayarFilter.map(b => {
+        const s = DB.sewa.find(x=>x.kode===b.kodeSewa);
+        const pyw = s ? DB.penyewa.find(p=>p.kode===s.kodePenyewa) : null;
+        return {Penyewa:pyw?.nama||'-', Periode:b.periode, Metode:b.metode, Jumlah:b.jumlah};
+    }));
+    XLSX.utils.book_append_sheet(wb, ws1, 'Pendapatan');
+    const ws2 = XLSX.utils.json_to_sheet(pengFilter.map(b => ({Tanggal:b.tanggal, Jenis:b.jenis, Jumlah:b.jumlah, Keterangan:b.keterangan})));
+    XLSX.utils.book_append_sheet(wb, ws2, 'Pengeluaran');
+    XLSX.writeFile(wb, 'laporan-' + periode + '.xlsx');
+    pesan('Laporan Excel diekspor');
+}
+
+// ============================================================
+// NEXUS AI — VOICE ASSISTANT LENGKAP
+// ============================================================
+function aktifkanAI(){
+    document.getElementById('aiAssistant').style.display = 'block';
+    const panel = document.getElementById('aiChatPanel');
+    const msgs = document.getElementById('aiMessages');
+    
+    document.getElementById('aiToggleBtn').addEventListener('click', () => {
+        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    });
+    document.getElementById('aiCloseBtn').addEventListener('click', () => { panel.style.display = 'none'; });
+    
+    function tambahPesan(teks, dariAI){
+        const div = document.createElement('div');
+        div.style.cssText = `display:flex;${dariAI?'justify-content:flex-start;':'justify-content:flex-end;'};animation:fadeInUp 0.3s ease-out;`;
+        div.innerHTML = `<div style="max-width:80%;padding:10px 14px;border-radius:${dariAI?'12px 12px 12px 4px':'12px 12px 4px 12px'};background:${dariAI?'rgba(0,240,255,0.1)':'rgba(255,150,0,0.1)'};border:1px solid ${dariAI?'rgba(0,240,255,0.3)':'rgba(255,150,0,0.3)'};font-family:'Rajdhani',sans-serif;font-size:13px;color:#fff;white-space:pre-wrap;line-height:1.5;">${teks}</div>`;
+        msgs.appendChild(div);
+        msgs.scrollTop = msgs.scrollHeight;
+    }
+    
+    function tambahTyping(){
+        const div = document.createElement('div');
+        div.id = 'typing-indicator';
+        div.style.cssText = 'display:flex;justify-content:flex-start;';
+        div.innerHTML = `<div style="padding:10px 14px;background:rgba(0,240,255,0.1);border:1px solid rgba(0,240,255,0.3);border-radius:12px 12px 12px 4px;"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>`;
+        msgs.appendChild(div);
+        msgs.scrollTop = msgs.scrollHeight;
+    }
+    
+    function hapusTyping(){
+        const t = document.getElementById('typing-indicator');
+        if(t) t.remove();
+    }
+    
+    function aiRespon(pertanyaan){
+        const p = pertanyaan.toLowerCase();
+        const totalKamar = DB.kamar.length;
+        const terisi = DB.kamar.filter(k => DB.statusKamar(k.kode)==='Terisi').length;
+        const pendapatan = DB.pembayaran.filter(b=>b.status==='Lunas').reduce((s,b)=>s+b.jumlah,0);
+        const pengeluaran = DB.pengeluaran.reduce((s,b)=>s+b.jumlah,0);
+        const laba = pendapatan - pengeluaran;
+        
+        if(p.includes('halo') || p.includes('hai') || p.includes('hi')){
+            return 'Halo! Saya NEXUS AI, asisten cerdas sistem manajemen kos Anda. Ada yang bisa saya bantu hari ini? Anda bisa bertanya tentang ringkasan sistem, penyewa, keuangan, kamar, atau meminta saya membaca semua data.';
+        }
+        
+        if(p.includes('ringkasan') || p.includes('overview') || p.includes('sistem')){
+            return `📊 RINGKASAN SISTEM\n\n🏠 Total Kamar: ${totalKamar} unit\n✅ Terisi: ${terisi} unit\n🚪 Tersedia: ${totalKamar-terisi} unit\n💰 Pendapatan: ${formatUang(pendapatan)}\n📤 Pengeluaran: ${formatUang(pengeluaran)}\n📈 Laba Bersih: ${formatUang(laba)}\n📢 Promosi Aktif: ${DB.promosi.filter(x=>x.status==='Berlaku').length}\n👥 Penyewa Aktif: ${DB.sewa.filter(s=>s.status==='Aktif').length}`;
+        }
+        
+        if(p.includes('jatuh tempo') || p.includes('tempo')){
+            const hariIni = new Date();
+            const tujuhHari = new Date(hariIni.getTime()+7*24*60*60*1000);
+            const jt = DB.sewa.filter(s => s.status==='Aktif' && s.tanggalSelesai && new Date(s.tanggalSelesai)>=hariIni && new Date(s.tanggalSelesai)<=tujuhHari);
+            if(jt.length === 0) return '✅ Tidak ada sewa yang jatuh tempo dalam 7 hari ke depan.';
+            let r = '⚠️ JATUH TEMPO (7 hari ke depan):\n\n';
+            jt.forEach(s => {
+                const pyw = DB.penyewa.find(x=>x.kode===s.kodePenyewa);
+                const kmr = DB.kamar.find(x=>x.kode===s.kodeKamar);
+                r += `• ${pyw?.nama} — Kamar ${kmr?.nomor}\n  📅 ${formatTanggal(s.tanggalSelesai)}\n`;
+            });
+            return r;
+        }
+        
+        if(p.includes('keuangan') || p.includes('pendapatan') || p.includes('laba') || p.includes('uang')){
+            return `💰 ANALISA KEUANGAN\n\n💵 Total Pendapatan: ${formatUang(pendapatan)}\n💸 Total Pengeluaran: ${formatUang(pengeluaran)}\n📊 Laba Bersih: ${formatUang(laba)}\n\n📋 Pembayaran tercatat: ${DB.pembayaran.length} transaksi\n🛡️ Jaminan ditahan: ${formatUang(DB.jaminan.filter(j=>j.status==='Ditahan').reduce((s,j)=>s+j.jumlah,0))}\n\n${laba>=0?'📈 Kondisi keuangan POSITIF — lanjutkan strategi ini!':'📉 Perlu perhatian — pengeluaran melebihi pendapatan.'}`;
+        }
+        
+        if(p.includes('penyewa') || p.includes('siapa')){
+            const aktif = DB.sewa.filter(s => s.status === 'Aktif');
+            if(aktif.length === 0) return 'Belum ada penyewa aktif.';
+            let r = `👥 PENYEWA AKTIF (${aktif.length} orang):\n\n`;
+            aktif.forEach((s,i) => {
+                const pyw = DB.penyewa.find(x=>x.kode===s.kodePenyewa);
+                const kmr = DB.kamar.find(x=>x.kode===s.kodeKamar);
+                r += `${i+1}. ${pyw?.nama}\n   🚪 Kamar ${kmr?.nomor}\n   📱 ${pyw?.telepon}\n   📅 ${formatTanggal(s.tanggalMulai)} - ${formatTanggal(s.tanggalSelesai)}\n   💰 ${formatUang(s.biaya)}/bln\n\n`;
+            });
+            return r;
+        }
+        
+        if(p.includes('kamar') || p.includes('tersedia') || p.includes('kosong')){
+            const tersedia = DB.kamar.filter(k => DB.statusKamar(k.kode) === 'Tersedia');
+            if(tersedia.length === 0) return '❌ Semua kamar terisi. Tidak ada kamar tersedia saat ini.';
+            let r = `🚪 KAMAR TERSEDIA (${tersedia.length}):\n\n`;
+            tersedia.forEach(k => {
+                r += `• ${k.nomor} — ${k.tipe}\n  💰 ${formatUang(k.harga)}/bln\n  🛋️ ${k.fasilitas}\n\n`;
+            });
+            return r;
+        }
+        
+        if(p.includes('baca semua') || p.includes('semua data') || p.includes('seluruh data')){
+            let r = `🔊 MEMBACA SELURUH DATA SISTEM\n\n`;
+            r += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            r += `📊 RINGKASAN UMUM\n`;
+            r += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            r += `Total Kamar: ${totalKamar}\nTerisi: ${terisi}\nTersedia: ${totalKamar-terisi}\nPendapatan: ${formatUang(pendapatan)}\nPengeluaran: ${formatUang(pengeluaran)}\nLaba: ${formatUang(laba)}\n\n`;
+            
+            r += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            r += `🏠 DAFTAR KAMAR\n`;
+            r += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            DB.kamar.forEach(k => {
+                r += `${k.nomor} — ${k.tipe} — ${formatUang(k.harga)} — ${DB.statusKamar(k.kode)}\n`;
+            });
+            
+            r += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            r += `👥 PENYEWA AKTIF\n`;
+            r += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            DB.sewa.filter(s=>s.status==='Aktif').forEach(s => {
+                const pyw = DB.penyewa.find(x=>x.kode===s.kodePenyewa);
+                const kmr = DB.kamar.find(x=>x.kode===s.kodeKamar);
+                r += `${pyw?.nama} — Kamar ${kmr?.nomor} — ${formatUang(s.biaya)}/bln\n`;
+            });
+            
+            r += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            r += `💰 PEMBAYARAN TERAKHIR\n`;
+            r += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            DB.pembayaran.slice(-5).forEach(b => {
+                const s = DB.sewa.find(x=>x.kode===b.kodeSewa);
+                const pyw = s ? DB.penyewa.find(x=>x.kode===s.kodePenyewa) : null;
+                r += `${pyw?.nama} — ${b.periode} — ${formatUang(b.jumlah)} — ${b.metode} — ${b.status}\n`;
+            });
+            
+            r += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            r += `🛡️ DATA JAMINAN\n`;
+            r += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            DB.jaminan.forEach(j => {
+                r += `${j.namaPenyewa} — Kamar ${j.kamar} — ${formatUang(j.jumlah)} — ${j.status}\n`;
+            });
+            
+            r += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            r += `📤 PENGELUARAN\n`;
+            r += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            DB.pengeluaran.forEach(b => {
+                r += `${b.jenis} — ${formatUang(b.jumlah)} — ${b.keterangan||''}\n`;
+            });
+            
+            r += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            r += `🔧 PEKERJAAN\n`;
+            r += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            DB.pekerjaan.forEach(pk => {
+                r += `${pk.nama} — ${pk.status} — Target ${formatTanggal(pk.tanggalTarget)}\n`;
+            });
+            
+            r += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            r += `📢 PROMOSI\n`;
+            r += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            DB.promosi.forEach(pr => {
+                r += `${pr.nama} — ${pr.tipe.includes('%')?pr.nilai+'%':formatUang(pr.nilai)} — ${pr.status}\n`;
+            });
+            
+            r += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            r += `🧾 DATA PEMILIK\n`;
+            r += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            r += `Nama: ${DB.pemilik.nama||'-'}\nNPWP: ${DB.pemilik.npwp||'-'}\nStatus Kawin: ${DB.pemilik.statusKawin||'-'}\n\n`;
+            r += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            r += `✅ PEMBACAAN DATA SELESAI\n`;
+            r += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+            
+            VoiceSystem.speak('Membaca seluruh data sistem. Total kamar ' + totalKamar + ', terisi ' + terisi + '. Pendapatan ' + formatUang(pendapatan) + ', pengeluaran ' + formatUang(pengeluaran) + ', laba bersih ' + formatUang(laba) + '. Terdapat ' + DB.sewa.filter(s=>s.status==='Aktif').length + ' penyewa aktif, ' + DB.pembayaran.length + ' pembayaran tercatat, dan ' + DB.pengeluaran.length + ' pengeluaran. Semua data telah ditampilkan.');
+            
+            return r;
+        }
+        
+        if(p.includes('pemilik')){
+            const pm = DB.pemilik;
+            return `🧾 DATA PEMILIK\n\nNama: ${pm.nama||'-'}\nNIK: ${pm.nik||'-'}\nNPWP: ${pm.npwp||'-'}\nStatus Perkawinan: ${pm.statusKawin||'-'}\nTelepon: ${pm.telepon||'-'}\nEmail: ${pm.email||'-'}\nAlamat: ${pm.alamat||'-'}\nUsaha: ${pm.namaUsaha||'-'}\nRekening: ${pm.rekening||'-'}`;
+        }
+        
+        if(p.includes('pekerjaan')){
+            if(DB.pekerjaan.length === 0) return 'Belum ada data pekerjaan.';
+            let r = '🔧 DATA PEKERJAAN:\n\n';
+            DB.pekerjaan.forEach(pk => {
+                r += `• ${pk.nama}\n  👤 PJ: ${pk.penanggungJawab||'-'}\n  📅 ${formatTanggal(pk.tanggalMulai)} s/d ${formatTanggal(pk.tanggalTarget)}\n  📊 Status: ${pk.status}\n\n`;
+            });
+            return r;
+        }
+        
+        if(p.includes('promosi')){
+            if(DB.promosi.length === 0) return 'Belum ada promosi aktif.';
+            let r = '📢 PROMOSI:\n\n';
+            DB.promosi.forEach(pr => {
+                r += `• ${pr.nama}\n  💰 ${pr.tipe.includes('%')?pr.nilai+'%':formatUang(pr.nilai)}\n  📅 ${formatTanggal(pr.tanggalMulai)} - ${formatTanggal(pr.tanggalSelesai)}\n  📊 ${pr.status}\n\n`;
+            });
+            return r;
+        }
+        
+        if(p.includes('pengeluaran')){
+            if(DB.pengeluaran.length === 0) return 'Belum ada pengeluaran.';
+            let r = `📤 PENGELUARAN (Total: ${formatUang(DB.pengeluaran.reduce((s,b)=>s+b.jumlah,0))}):\n\n`;
+            DB.pengeluaran.forEach(b => {
+                r += `• ${b.jenis} — ${formatUang(b.jumlah)}\n  ${b.keterangan||''}\n\n`;
+            });
+            return r;
+        }
+        
+        if(p.includes('jaminan')){
+            if(DB.jaminan.length === 0) return 'Belum ada data jaminan.';
+            let r = `🛡️ DATA JAMINAN:\n\n`;
+            DB.jaminan.forEach(j => {
+                r += `• ${j.namaPenyewa} — Kamar ${j.kamar}\n  💰 ${formatUang(j.jumlah)} — ${j.status}\n\n`;
+            });
+            return r;
+        }
+        
+        if(p.includes('bantuan') || p.includes('help') || p.includes('apa yang bisa')){
+            return `🤖 BANTUAN NEXUS AI\n\nAnda bisa bertanya:\n• "Ringkasan sistem" — gambaran umum\n• "Siapa penyewa aktif" — daftar penyewa\n• "Bagaimana keuangan" — analisa uang\n• "Kamar tersedia" — kamar kosong\n• "Jatuh tempo" — sewa yang akan berakhir\n• "Baca semua data" — 🔊 membaca SEMUA data dengan suara\n• "Data pemilik" — info pemilik\n• "Pekerjaan" — daftar pekerjaan\n• "Promosi" — daftar promosi\n• "Pengeluaran" — daftar biaya\n• "Jaminan" — data jaminan\n\n💡 Tips: Tekan tombol mikrofon untuk bicara langsung!`;
+        }
+        
+        if(p.includes('terima kasih') || p.includes('makasih') || p.includes('thanks')){
+            return 'Sama-sama! 😊 Senang bisa membantu. Jika ada pertanyaan lain, saya siap membantu kapan saja!';
+        }
+        
+        return `🤔 Saya mengerti pertanyaan Anda tentang "${pertanyaan}".\n\nCoba tanyakan:\n• "Ringkasan sistem"\n• "Siapa penyewa aktif"\n• "Bagaimana keuangan"\n• "Kamar tersedia"\n• "Baca semua data" 🔊\n• "Bantuan"`;
+    }
+    
+    function kirimPesan(teks){
+        if(!teks.trim()) return;
+        tambahPesan(teks, false);
+        document.getElementById('aiInput').value = '';
+        tambahTyping();
+        setTimeout(() => {
+            hapusTyping();
+            const jawaban = aiRespon(teks);
+            tambahPesan(jawaban, true);
+            if(!teks.toLowerCase().includes('baca semua') && !teks.toLowerCase().includes('semua data')){
+                VoiceSystem.speak(jawaban.replace(/[^\w\s.,!?]/g, '').slice(0, 300));
+            }
+        }, 800);
+    }
+    
+    VoiceSystem.kirimPesanAI = kirimPesan;
+    
+    document.getElementById('aiSendBtn').addEventListener('click', () => {
+        kirimPesan(document.getElementById('aiInput').value);
+    });
+    
+    document.getElementById('aiInput').addEventListener('keypress', (e) => {
+        if(e.key === 'Enter') kirimPesan(document.getElementById('aiInput').value);
+    });
+    
+    document.getElementById('aiMicBtn').addEventListener('click', () => {
+        VoiceSystem.startListening();
+    });
+    
+    document.getElementById('aiVoiceBtn').addEventListener('click', () => {
+        VoiceSystem.startListening();
+    });
+    
+    document.getElementById('aiVoiceSpeakBtn').addEventListener('click', () => {
+        VoiceSystem.toggleVoiceOutput();
+    });
+    
+    document.getElementById('btnVoiceToggle').addEventListener('click', () => {
+        VoiceSystem.toggleVoiceOutput();
+    });
+    
+    // Welcome message
+    setTimeout(() => {
+        tambahPesan('👋 Halo! Saya NEXUS AI, asisten cerdas Anda. Saya bisa menjawab pertanyaan tentang sistem, membaca data dengan suara, dan membantu mengelola kos. Coba tanyakan "Ringkasan sistem" atau tekan mikrofon untuk bicara!', true);
+        VoiceSystem.speak('Halo! Saya NEXUS AI siap membantu. Silakan tanya apapun tentang sistem Anda.');
+    }, 1000);
+}
+
+window.aiQuickAsk = function(topik){
+    document.getElementById('aiInput').value = topik;
+    const event = new Event('keypress');
+    event.key = 'Enter';
+    document.getElementById('aiInput').dispatchEvent(event);
+};
+
+// ============================================================
+// EVENT GLOBAL
+// ============================================================
+document.getElementById('tutupModal').addEventListener('click', tutupModal);
+document.getElementById('modal').addEventListener('click', function(e){
+    if(e.target === this) tutupModal();
+});
+
+document.getElementById('btnNotif').addEventListener('click', function(){
+    const panel = document.getElementById('panelJatuhTempo');
+    if(panel && !panel.classList.contains('hidden')){
+        panel.scrollIntoView({behavior:'smooth', block:'center'});
+    } else {
+        pesan('Tidak ada notifikasi baru');
+    }
+});
+
+// ============================================================
+// INISIALISASI AWAL
+// ============================================================
+if(DB.aktif){
+    tampilkanUtama();
+    setTimeout(aktifkanAI, 1500);
+}
+</script>
+</body>
+</html>
